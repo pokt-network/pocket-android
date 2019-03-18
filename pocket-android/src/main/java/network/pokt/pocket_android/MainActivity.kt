@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
+import network.pokt.pocketcore.PocketCore
 import network.pokt.pocketcore.model.Blockchain
 import network.pokt.pocketcore.model.Configuration
-import network.pokt.pocketcore.net.API
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +23,13 @@ class MainActivity : AppCompatActivity() {
         array.add(blockchain)
         array.add(blockchain1)
         val configuration = Configuration("DEVID1", array)
-        val api = API().getActiveNodes(configuration)
+
+        val pocketCore = PocketCore(configuration)
+
+        val nodes = pocketCore.retrieveNodes {nodes ->
+            for (node in nodes){
+                val something = ""
+            }
+        }
     }
 }
