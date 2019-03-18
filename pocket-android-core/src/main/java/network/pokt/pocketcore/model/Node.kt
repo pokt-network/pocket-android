@@ -18,12 +18,7 @@ class Node(network: String, netId: String, version: String, ipPort: String) {
         }
     }
 
-    constructor(network: String, netId: String, version: String, ip: String, port: Int, ipPort: String) : this(
-        network,
-        netId,
-        version,
-        ipPort
-    ) {
+    constructor(network: String, netId: String, version: String, ip: String, port: Int, ipPort: String) : this(network, netId, version, ipPort) {
         this.network = network
         this.netId = netId
         this.version = version
