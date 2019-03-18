@@ -1,4 +1,11 @@
 package network.pokt.pocketcore
 
-class PocketCore {
+import network.pokt.pocketcore.model.Configuration
+import network.pokt.pocketcore.model.Dispatch
+
+class PocketCore(configuration:Configuration) {
+
+    private var dispatch: Dispatch? = null
+
+
 }
