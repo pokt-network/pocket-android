@@ -37,7 +37,7 @@ class Dispatch(var configuration:Configuration){
             }
 
             val jsonArray = json.getJSONArray(it)
-            nodes = createNodesArray(jsonArray, data)
+            nodes.addAll(createNodesArray(jsonArray, data))
 
         }
 
