@@ -12,7 +12,6 @@ class API {
     private var gson = Gson().newBuilder().setPrettyPrinting().create()
 
     fun getActiveNodes(configuration: Configuration) {
-        Log.i("msg","HERE 1")
         val client = OkHttpClient()
         val url = Constants.DISPATCH_NODE_URL.plus(Constants.DISPATCH_PATH)
         val json = gson.toJson(configuration)
@@ -28,7 +27,6 @@ class API {
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.i("msg","HERE 2")
                 Log.i("error", e.stackTrace.toString())
             }
 
@@ -40,7 +38,6 @@ class API {
 
 
                 } catch (e: Exception) {
-                    Log.i("msg","HERE 3")
                     Log.i("error", e.stackTrace.toString())
                     print(e)
                 }
