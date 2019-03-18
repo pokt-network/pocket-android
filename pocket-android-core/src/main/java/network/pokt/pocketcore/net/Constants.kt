@@ -5,8 +5,8 @@ class Constants {
 
         val DISPATCH_NODE_URL = "http://dispatch.staging.pokt.network"
         val DISPATCH_PATH = "/v1/dispatch"
-        val REPORT_PATH = "/v1/dispatch"
-        val RELAY_PATH = "/v1/dispatch"
-        val JSON_CONTENT_TYPE = "application/json; charset=utf-8"
+        val REPORT_PATH = "/v1/report"
+        val RELAY_PATH = "/v1/relay/"
+        val JSON_CONTENT_TYPE = "application/json"
     }
 }
