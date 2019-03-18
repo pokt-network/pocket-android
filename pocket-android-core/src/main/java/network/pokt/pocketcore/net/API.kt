@@ -10,16 +10,17 @@ import java.io.IOException
 class API {
 
     private var gson = Gson().newBuilder().setPrettyPrinting().create()
+    private val client = OkHttpClient()
 
-    fun getActiveNodes(configuration: Configuration) {
-        val client = OkHttpClient()
+
+    fun retrieveNodes(configuration: Configuration, callback: (json:JSONObject) -> Unit) {
         val url = Constants.DISPATCH_NODE_URL.plus(Constants.DISPATCH_PATH)
         val json = gson.toJson(configuration)
         val request = Request.Builder()
             .url(url)
             .post(
                 RequestBody.create(
-                    MediaType.parse("application/json; charset=utf-8"), json
+                    MediaType.parse(Constants.JSON_CONTENT_TYPE), json
                 )
             )
             .build()
@@ -31,21 +32,16 @@ class API {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                Log.i("response",response.body()!!.toString())
+                Log.i("response", response.body()!!.toString())
                 try {
                     val responseData = response.body()!!.string()
                     val json = JSONObject(responseData)
-
+                    callback.invoke(json)
 
                 } catch (e: Exception) {
                     Log.i("error", e.stackTrace.toString())
-                    print(e)
                 }
-
             }
         })
     }
-
-
-
 }
