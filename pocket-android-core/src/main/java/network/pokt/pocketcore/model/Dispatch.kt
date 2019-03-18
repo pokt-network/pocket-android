@@ -1,6 +1,6 @@
 package network.pokt.pocketcore.model
 
-import android.util.Log
+import network.pokt.pocketcore.exceptions.PocketError
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -26,14 +26,14 @@ class Dispatch(var configuration:Configuration){
         val keyValuesMap = json.keys()
 
         if(!keyValuesMap.hasNext()){
-            Log.i("error", "Failed to parse Node object")
+            throw PocketError("Failed to parse Node object")
         }
 
         keyValuesMap.forEach {
             val data = it.split("|")
 
             if(data.size != 3){
-                Log.i("error", "Failed to parsed service nodes with error: Node information is missing 1 or more params: $data")
+                throw PocketError("Failed to parsed service nodes with error: Node information is missing 1 or more params: $data")
             }
 
             val jsonArray = json.getJSONArray(it)
