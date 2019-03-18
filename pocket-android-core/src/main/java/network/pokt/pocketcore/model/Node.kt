@@ -14,7 +14,7 @@ class Node(network: String, netId: String, version: String, ipPort: String) {
 
     init {
         if (!this.ipPort.contains(nonSSLProtocol) || !this.ipPort.contains(SSLProtocol)) {
-            //this.ipPort = "\(nonSSLProtocol)\(ipPort)"
+            this.ipPort = "$nonSSLProtocol$ipPort"
         }
     }
 

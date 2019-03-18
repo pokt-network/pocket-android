@@ -41,6 +41,10 @@ class Dispatch(var configuration:Configuration){
 
         }
 
+        if (nodes.isNotEmpty()) {
+            this.configuration.nodes = nodes
+        }
+
         return nodes
     }
 }
