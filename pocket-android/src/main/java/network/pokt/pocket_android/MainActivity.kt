@@ -18,13 +18,17 @@ class MainActivity : AppCompatActivity() {
 
         pocketCore.retrieveNodes { nodes ->
             if (nodes.isNotEmpty()) {
+                val report = pocketCore.createReport(nodes.get(0).ipPort, "This is a test, please ignore")
+                pocketCore.send(report){ msg ->
+                    print(msg)
+                }
+
                 val address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f"
                 val data =
                     "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"$address\",\"latest\"],\"id\":67}"
                 val relay = (pocketCore.createRelay("ETH", "4", "0", data, "DEVID1"))
                 pocketCore.send(relay) { response ->
                     print(response)
-                    val someyhing = ""
                 }
             }
         }

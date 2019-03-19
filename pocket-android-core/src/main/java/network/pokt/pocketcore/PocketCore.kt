@@ -3,26 +3,27 @@ package network.pokt.pocketcore
 import network.pokt.pocketcore.exceptions.PocketError
 import network.pokt.pocketcore.extensions.getErrorMessage
 import network.pokt.pocketcore.extensions.hasError
+import network.pokt.pocketcore.interfaces.PocketPlugin
 import network.pokt.pocketcore.model.*
 import network.pokt.pocketcore.net.PocketAPI
 import org.json.JSONObject
 
-class PocketCore(devId: String, networkName:String, netId:Array<String>, version:String, maxNodes: Int = 5, requestTimeOut: Int = 1000) {
+class PocketCore(devId: String, networkName: String, netId: Array<String>, version: String, maxNodes: Int = 5, requestTimeOut: Int = 1000) : PocketPlugin {
 
     private var dispatch: Dispatch? = null
     private var configuration: Configuration? = null
 
     init {
         var blockchains = arrayListOf<Blockchain>()
-        netId.forEach{ netId ->
-                blockchains.add(Blockchain(networkName, netId, version))
+        netId.forEach { netId ->
+            blockchains.add(Blockchain(networkName, netId, version))
         }
 
         this.configuration = Configuration(devId, blockchains, maxNodes, requestTimeOut)
         this.dispatch = Dispatch(configuration!!)
     }
 
-    constructor(devId:String, networkName:String, netId:String, version:String, maxNodes:Int = 5, requestTimeOut: Int = 1000):this(devId, networkName, arrayOf(netId), version, maxNodes, requestTimeOut)
+    constructor(devId: String, networkName: String, netId: String, version: String, maxNodes: Int = 5, requestTimeOut: Int = 1000) : this(devId, networkName, arrayOf(netId), version, maxNodes, requestTimeOut)
 
 
     fun getNode(netID: String, network: String, version: String): Node? {
@@ -37,7 +38,7 @@ class PocketCore(devId: String, networkName:String, netId:Array<String>, version
             }
         }
 
-        return if (nodes.isEmpty()) null else nodes.get((0 until  nodes.count()).random())
+        return if (nodes.isEmpty()) null else nodes.get((0 until nodes.count()).random())
 
     }
 
@@ -45,37 +46,51 @@ class PocketCore(devId: String, networkName:String, netId:Array<String>, version
         return Relay(blockchain, netID, version, data, devID)
     }
 
-    fun send(relay:Relay, callback: (data: JSONObject) -> Unit){
+    fun createReport(ip: String, message: String): Report {
+        return Report(ip, message)
+    }
+
+    fun send(relay: Relay, callback: (data: JSONObject) -> Unit) {
         if (!relay.isValid()) {
             throw PocketError("Relay is missing a property, please verify all properties.")
             return
         }
 
         val node = getNode(relay.netId, relay.blockchain, relay.version)
-        if(node == null){
+        if (node == null) {
             throw PocketError("Node is empty;")
             return
         }
 
-        PocketAPI().send(relay, node.ipPort){jsonObject ->
+        PocketAPI().send(relay, node.ipPort) { jsonObject ->
 
-            if(jsonObject.hasError()){
+            if (jsonObject.hasError()) {
                 throw PocketError(jsonObject.getErrorMessage())
-            }else{
+            } else {
                 callback.invoke(jsonObject)
             }
         }
     }
 
+    fun send(report: Report, callback: (response: String) -> Unit){
+        if (!report.isValid()) {
+            throw PocketError("Report is missing a property, please verify all properties.")
+            return
+        }
+
+        PocketAPI().send(report){response ->
+            callback.invoke(response)
+        }
+    }
 
     fun retrieveNodes(callback: (nodes: ArrayList<Node>) -> Unit) {
         PocketAPI().retrieveNodes(dispatch!!.configuration) {
             it.let { jsonObject ->
                 try {
                     val nodes = this.dispatch!!.parseDispatchResponse(jsonObject)
-                    if(nodes.isNotEmpty()){
+                    if (nodes.isNotEmpty()) {
                         callback.invoke(nodes)
-                    }else{
+                    } else {
                         callback.invoke(nodes)
                     }
 
@@ -84,5 +99,13 @@ class PocketCore(devId: String, networkName:String, netId:Array<String>, version
                 }
             }
         }
+    }
+
+    override fun createWallet(subnetwork: String, data: String): Wallet {
+        throw PocketError("This method must be overridden")
+    }
+
+    override fun importWallet(address: String, privateKey: String, subnetwork: String, data: String) {
+        throw PocketError("This method must be overridden")
     }
 }
