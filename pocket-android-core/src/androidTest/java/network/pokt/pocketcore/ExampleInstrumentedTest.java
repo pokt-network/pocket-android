@@ -4,8 +4,10 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import kotlin.Unit;
 import network.pokt.pocketcore.model.Blockchain;
 import network.pokt.pocketcore.model.Configuration;
+import network.pokt.pocketcore.model.Node;
 import network.pokt.pocketcore.net.PocketAPI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,14 +31,14 @@ public class ExampleInstrumentedTest {
 
         assertEquals("network.pokt.pocketcore.test", appContext.getPackageName());
 
-        PocketAPI api = new PocketAPI();
-        Blockchain blockchain = new Blockchain("ETH","1","0");
-        Blockchain blockchain1 = new Blockchain("ETH", "4", "0");
-        ArrayList<Blockchain> array = new ArrayList<Blockchain>();
-        array.add(blockchain);
-        array.add(blockchain1);
-        Configuration configuration = new Configuration("DEVID1", array,5,1000);
-        //api.retrieveNodes(configuration);
+        PocketCore pocketCore = new PocketCore("DEVID1", "ETH", "4", "0", 5, 1000);
+        pocketCore.retrieveNodes(nodes -> {
+            for(Node node : nodes){
+
+            }
+            
+            return Unit.INSTANCE;
+        });
 
     }
 }
