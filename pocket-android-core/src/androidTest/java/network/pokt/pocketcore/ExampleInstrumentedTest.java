@@ -22,7 +22,9 @@ public class ExampleInstrumentedTest {
     @Test
     public void retrieveFailedNodes() {
         pocketCore.retrieveNodes(nodes -> {
-            assertNull("expected crash",nodes);
+            if(nodes == null){
+                fail("Nodes are null");
+            }
             return Unit.INSTANCE;
         });
 
@@ -39,7 +41,7 @@ public class ExampleInstrumentedTest {
 
     @Before
     public void setUp() throws Exception {
-        this.pocketCore = new PocketCore("DEVID1", "ETH", "4", "0", 5, 1000);
+        this.pocketCore = new PocketCore("DEVID5", "ETH", "4", "0", 5, 1000);
     }
 
     @After

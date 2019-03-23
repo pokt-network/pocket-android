@@ -9,3 +9,7 @@ fun JSONObject.hasError(): Boolean {
 fun JSONObject.getErrorMessage(): String{
     return this.getJSONObject("error").getString("message")
 }
+
+fun JSONObject.getErrorTitle(): String{
+    return this.getJSONObject("error").getString("title")
+}

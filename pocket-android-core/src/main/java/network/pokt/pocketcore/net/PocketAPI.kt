@@ -6,6 +6,7 @@ import network.pokt.pocketcore.model.Configuration
 import network.pokt.pocketcore.model.Relay
 import network.pokt.pocketcore.model.Report
 import okhttp3.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.lang.Exception
@@ -68,7 +69,7 @@ class PocketAPI {
         })
     }
 
-    fun retrieveNodes(configuration: Configuration, callback: (json: JSONObject) -> Unit) {
+    fun retrieveNodes(configuration: Configuration, callback: (jsonArray: JSONArray) -> Unit) {
         val url = Constants.DISPATCH_NODE_URL.plus(Constants.DISPATCH_PATH)
         val json = gson.toJson(configuration)
         val request = Request.Builder()
@@ -88,8 +89,8 @@ class PocketAPI {
 
             override fun onResponse(call: Call, response: Response) {
                 val responseData = response.body()!!.string()
-                val json = JSONObject(responseData)
-                callback.invoke(json)
+                val jsonArray = JSONArray(responseData)
+                callback.invoke(jsonArray)
 
             }
         })

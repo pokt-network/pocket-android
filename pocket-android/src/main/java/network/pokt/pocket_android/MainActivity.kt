@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val pocketCore = PocketCore("DEVID1", "ETH", "4", "0")
+        val pocketCore = PocketCore("DEVID1", "ETH", arrayOf("4","1"))
 
         pocketCore.retrieveNodes { nodes ->
             if (nodes.isNotEmpty()) {
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                 val address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f"
                 val data =
                     "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"$address\",\"latest\"],\"id\":67}"
-                val relay = (pocketCore.createRelay("ETH", "4", "0", data, "DEVID1"))
+                val relay = (pocketCore.createRelay("ETH", "4", data, "DEVID1"))
                 pocketCore.send(relay) { response ->
                     print(response)
                 }
