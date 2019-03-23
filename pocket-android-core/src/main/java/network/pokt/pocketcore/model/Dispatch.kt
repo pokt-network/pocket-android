@@ -1,6 +1,5 @@
 package network.pokt.pocketcore.model
 
-import network.pokt.pocketcore.exceptions.PocketError
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -11,34 +10,31 @@ class Dispatch(var configuration:Configuration){
         return this.configuration.blockChains
     }
 
-    private fun createNodesArray(jsonArray: JSONArray, data: List<String>): ArrayList<Node> {
+    private fun createNodesArray(jsonObject: JSONObject): ArrayList<Node> {
         var nodes = arrayListOf<Node>()
-        for(i in 0 until jsonArray.length()){
-            val node = Node(data[0], data[2], data[1], jsonArray.getString(i))
-            nodes.add(node)
+
+        val network = jsonObject.getString("name")
+        val netId = jsonObject.getString("netid")
+
+        if(jsonObject.has("ips")){
+            val ipPortArray = jsonObject.getJSONArray("ips")
+            for (i in 0..(ipPortArray.length() - 1)) {
+                val node = Node(network, netId, ipPortArray.getString(i))
+                nodes.add(node)
+            }
         }
 
         return nodes
     }
 
-    fun parseDispatchResponse(json: JSONObject): ArrayList<Node> {
+    fun parseDispatchResponse(jsonArray: JSONArray): ArrayList<Node> {
         var nodes = arrayListOf<Node>()
-        val keyValuesMap = json.keys()
 
-        if(!keyValuesMap.hasNext()){
-            throw PocketError("Failed to parse Node object")
-        }
-
-        keyValuesMap.forEach {
-            val data = it.split("|")
-
-            if(data.size != 3){
-                throw PocketError("Failed to parsed service nodes with error: Node information is missing 1 or more params: $data")
+        for (i in 0..(jsonArray.length() - 1)) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            jsonObject.let {
+                nodes.addAll(createNodesArray(jsonObject))
             }
-
-            val jsonArray = json.getJSONArray(it)
-            nodes.addAll(createNodesArray(jsonArray, data))
-
         }
 
         if (nodes.isNotEmpty()) {

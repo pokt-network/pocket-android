@@ -8,7 +8,7 @@ import network.pokt.pocketcore.model.*
 import network.pokt.pocketcore.net.PocketAPI
 import org.json.JSONObject
 
-class PocketCore(devId: String, networkName: String, netId: Array<String>, version: String, maxNodes: Int = 5, requestTimeOut: Int = 1000) : PocketPlugin {
+class PocketCore(devId: String, networkName: String, netId: Array<String>, maxNodes: Int = 5, requestTimeOut: Int = 1000) : PocketPlugin {
 
     private var dispatch: Dispatch? = null
     private var configuration: Configuration? = null
@@ -16,24 +16,24 @@ class PocketCore(devId: String, networkName: String, netId: Array<String>, versi
     init {
         var blockchains = arrayListOf<Blockchain>()
         netId.forEach { netId ->
-            blockchains.add(Blockchain(networkName, netId, version))
+            blockchains.add(Blockchain(networkName, netId))
         }
 
         this.configuration = Configuration(devId, blockchains, maxNodes, requestTimeOut)
         this.dispatch = Dispatch(configuration!!)
     }
 
-    constructor(devId: String, networkName: String, netId: String, version: String, maxNodes: Int = 5, requestTimeOut: Int = 1000) : this(devId, networkName, arrayOf(netId), version, maxNodes, requestTimeOut)
+    constructor(devId: String, networkName: String, netId: String, maxNodes: Int = 5, requestTimeOut: Int = 1000) : this(devId, networkName, arrayOf(netId), maxNodes, requestTimeOut)
 
 
-    fun getNode(netID: String, network: String, version: String): Node? {
+    fun getNode(netID: String, network: String): Node? {
         if (this.configuration!!.isNodeEmpty()) {
             return null
         }
 
         var nodes = arrayListOf<Node>()
         this.configuration!!.nodes.forEach { node ->
-            if (node.isEqual(netID, network, version)) {
+            if (node.isEqual(netID, network)) {
                 nodes.add(node)
             }
         }
@@ -42,8 +42,8 @@ class PocketCore(devId: String, networkName: String, netId: Array<String>, versi
 
     }
 
-    fun createRelay(blockchain: String, netID: String, version: String, data: String, devID: String): Relay {
-        return Relay(blockchain, netID, version, data, devID)
+    fun createRelay(blockchain: String, netID: String, data: String, devID: String): Relay {
+        return Relay(blockchain, netID, data, devID)
     }
 
     fun createReport(ip: String, message: String): Report {
@@ -56,7 +56,7 @@ class PocketCore(devId: String, networkName: String, netId: Array<String>, versi
             return
         }
 
-        val node = getNode(relay.netId, relay.blockchain, relay.version)
+        val node = getNode(relay.netId, relay.blockchain)
         if (node == null) {
             throw PocketError("Node is empty;")
             return
@@ -85,9 +85,9 @@ class PocketCore(devId: String, networkName: String, netId: Array<String>, versi
 
     fun retrieveNodes(callback: (nodes: ArrayList<Node>) -> Unit) {
         PocketAPI().retrieveNodes(dispatch!!.configuration) {
-            it.let { jsonObject ->
+            it.let { jsonArray ->
                 try {
-                    val nodes = this.dispatch!!.parseDispatchResponse(jsonObject)
+                    val nodes = this.dispatch!!.parseDispatchResponse(jsonArray)
                     if (nodes.isNotEmpty()) {
                         callback.invoke(nodes)
                     } else {

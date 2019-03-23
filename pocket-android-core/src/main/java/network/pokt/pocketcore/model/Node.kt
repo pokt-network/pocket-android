@@ -1,13 +1,12 @@
 package network.pokt.pocketcore.model
 
-class Node(network: String, netId: String, version: String, ipPort: String) {
+class Node(network: String, netId: String, ipPort: String) {
 
     var network = network
     var netId = netId
-    var version = version
-    var ipPort = ipPort
     lateinit var ip: String
     var port: Int? = null
+    var ipPort = ipPort
 
     private val nonSSLProtocol = "http://"
     private val SSLProtocol = "https://"
@@ -18,17 +17,16 @@ class Node(network: String, netId: String, version: String, ipPort: String) {
         }
     }
 
-    constructor(network: String, netId: String, version: String, ip: String, port: Int, ipPort: String) : this(network, netId, version, ipPort) {
+    constructor(network: String, netId: String, ip: String, port: Int, ipPort: String) : this(network, netId, ipPort) {
         this.network = network
         this.netId = netId
-        this.version = version
         this.ip = ip
         this.port = port
         this.ipPort = ipPort
     }
 
-    fun isEqual(netId: String, network: String, version: String): Boolean {
-        if (this.netId == netId && this.network == network && this.version == version) {
+    fun isEqual(netId: String, network: String): Boolean {
+        if (this.netId == netId && this.network == network) {
             return true
         }
 
