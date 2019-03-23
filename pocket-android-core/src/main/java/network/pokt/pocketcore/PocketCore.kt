@@ -11,7 +11,7 @@ import org.json.JSONObject
 class PocketCore(devId: String, networkName: String, netId: Array<String>, maxNodes: Int = 5, requestTimeOut: Int = 1000) : PocketPlugin {
 
     private var dispatch: Dispatch? = null
-    private lateinit var configuration: Configuration
+    private var configuration: Configuration
 
     init {
         var blockchains = arrayListOf<Blockchain>()
