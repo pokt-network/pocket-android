@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         val pocketCore = PocketCore("DEVID1", "ETH", arrayOf("4","1"))
 
         pocketCore.retrieveNodes { nodes ->
-            if (nodes.isNotEmpty()) {
+            if (!nodes.isNullOrEmpty()) {
                 val report = pocketCore.createReport(nodes.get(0).ipPort, "This is a test, please ignore")
                 pocketCore.send(report){ msg ->
                     print(msg)

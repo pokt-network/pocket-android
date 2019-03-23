@@ -11,7 +11,7 @@ import org.json.JSONObject
 class PocketCore(devId: String, networkName: String, netId: Array<String>, maxNodes: Int = 5, requestTimeOut: Int = 1000) : PocketPlugin {
 
     private var dispatch: Dispatch? = null
-    private var configuration: Configuration? = null
+    private lateinit var configuration: Configuration
 
     init {
         var blockchains = arrayListOf<Blockchain>()
@@ -20,7 +20,7 @@ class PocketCore(devId: String, networkName: String, netId: Array<String>, maxNo
         }
 
         this.configuration = Configuration(devId, blockchains, maxNodes, requestTimeOut)
-        this.dispatch = Dispatch(configuration!!)
+        this.dispatch = Dispatch(configuration)
     }
 
     constructor(devId: String, networkName: String, netId: String, maxNodes: Int = 5, requestTimeOut: Int = 1000) : this(devId, networkName, arrayOf(netId), maxNodes, requestTimeOut)
@@ -83,9 +83,9 @@ class PocketCore(devId: String, networkName: String, netId: Array<String>, maxNo
         }
     }
 
-    fun retrieveNodes(callback: (nodes: ArrayList<Node>) -> Unit) {
-        PocketAPI().retrieveNodes(dispatch!!.configuration) {
-            it.let { jsonArray ->
+    fun retrieveNodes(callback: (nodes: ArrayList<Node>?) -> Unit) {
+        PocketAPI().retrieveNodes(dispatch!!.configuration) {jsonArray ->
+            if(jsonArray != null){
                 try {
                     val nodes = this.dispatch!!.parseDispatchResponse(jsonArray)
                     if (nodes.isNotEmpty()) {
@@ -97,6 +97,8 @@ class PocketCore(devId: String, networkName: String, netId: Array<String>, maxNo
                 } catch (error: PocketError) {
                     throw PocketError("There was an error parsing your nodes ${error.message}")
                 }
+            }else{
+                throw PocketError("Node is empty")
             }
         }
     }

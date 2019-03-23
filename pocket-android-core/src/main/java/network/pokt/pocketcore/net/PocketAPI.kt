@@ -1,13 +1,16 @@
 package network.pokt.pocketcore.net
 
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import network.pokt.pocketcore.exceptions.PocketError
+import network.pokt.pocketcore.extensions.getErrorMessage
 import network.pokt.pocketcore.model.Configuration
 import network.pokt.pocketcore.model.Relay
 import network.pokt.pocketcore.model.Report
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
+import org.json.JSONTokener
 import java.io.IOException
 import java.lang.Exception
 
@@ -69,7 +72,7 @@ class PocketAPI {
         })
     }
 
-    fun retrieveNodes(configuration: Configuration, callback: (jsonArray: JSONArray) -> Unit) {
+    fun retrieveNodes(configuration: Configuration, callback: (jsonArray: JSONArray?) -> Unit) {
         val url = Constants.DISPATCH_NODE_URL.plus(Constants.DISPATCH_PATH)
         val json = gson.toJson(configuration)
         val request = Request.Builder()
@@ -89,9 +92,14 @@ class PocketAPI {
 
             override fun onResponse(call: Call, response: Response) {
                 val responseData = response.body()!!.string()
-                val jsonArray = JSONArray(responseData)
-                callback.invoke(jsonArray)
+                val json = JSONTokener(responseData).nextValue()
 
+                if(json is JSONObject){
+                    callback.invoke(null)
+                }else if(json is JSONArray){
+                    val jsonArray = JSONArray(responseData)
+                    callback.invoke(jsonArray)
+                }
             }
         })
     }
