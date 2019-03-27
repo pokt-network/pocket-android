@@ -1,0 +1,1 @@
+{"network":"AION","subnetwork":"mastery","query":{"rpc_method":"aion_protocolVersion","rpc_params":[]},"decoder":{},"result":"54","decoded":false,"error":false,"error_msg":null}

@@ -1,0 +1,1 @@
+{"network":"AION","subnetwork":"mastery","query":{"rpc_method":"aion_blockNumber","rpc_params":[]},"decoder":{},"result":"0xc94","decoded":false,"error":false,"error_msg":null}

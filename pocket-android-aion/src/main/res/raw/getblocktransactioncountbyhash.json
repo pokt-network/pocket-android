@@ -1,0 +1,1 @@
+{"network":"AION","subnetwork":"mastery","query":{"rpc_method":"aion_getBlockTransactionCountByHash","rpc_params":[]},"decoder":{},"result":"0xc","decoded":false,"error":false,"error_msg":null}

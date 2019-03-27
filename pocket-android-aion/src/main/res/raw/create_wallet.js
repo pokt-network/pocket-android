@@ -1,0 +1,1 @@
+var wallet = aionInstance.eth.accounts.create();

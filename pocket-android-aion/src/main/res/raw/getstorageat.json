@@ -1,0 +1,1 @@
+{"network":"AION","subnetwork":"mastery","query":{"rpc_method":"aion_getStorageAt","rpc_params":[]},"decoder":{},"result":"0x000000000000000000000000000000000000000000000000000000000000162e","decoded":false,"error":false,"error_msg":null}
