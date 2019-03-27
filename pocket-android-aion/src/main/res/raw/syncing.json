@@ -1,0 +1,1 @@
+{"network":"AION","subnetwork":"mastery","query":{"rpc_method":"aion_syncing","rpc_params":[]},"decoder":{},"result":false,"decoded":false,"error":false,"error_msg":null}

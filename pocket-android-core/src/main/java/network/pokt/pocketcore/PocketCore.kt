@@ -8,7 +8,7 @@ import network.pokt.pocketcore.model.*
 import network.pokt.pocketcore.net.PocketAPI
 import org.json.JSONObject
 
-class PocketCore(devId: String, networkName: String, netId: Array<String>, maxNodes: Int = 5, requestTimeOut: Int = 1000) : PocketPlugin {
+open class PocketCore(devId: String, networkName: String, netId: Array<String>, maxNodes: Int = 5, requestTimeOut: Int = 1000) : PocketPlugin {
 
     private var dispatch: Dispatch? = null
     private var configuration: Configuration
@@ -108,6 +108,10 @@ class PocketCore(devId: String, networkName: String, netId: Array<String>, maxNo
     }
 
     override fun importWallet(address: String, privateKey: String, subnetwork: String, data: String) {
+        throw PocketError("This method must be overridden")
+    }
+
+    override fun createWallet() {
         throw PocketError("This method must be overridden")
     }
 }

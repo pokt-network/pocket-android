@@ -1,0 +1,1 @@
+{"network":"AION","subnetwork":"mastery","query":{"rpc_method":"net_peerCount","rpc_params":[]},"decoder":{},"result":"0x19","decoded":false,"error":false,"error_msg":null}

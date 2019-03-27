@@ -1,0 +1,1 @@
+{"network":"AION","subnetwork":"mastery","query":{"rpc_method":"aion_estimateGas","rpc_params":[]},"decoder":{},"result":"0x5208","decoded":false,"error":false,"error_msg":null}
