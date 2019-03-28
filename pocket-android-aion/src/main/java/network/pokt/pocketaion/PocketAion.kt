@@ -1,9 +1,9 @@
 package network.pokt.pocketaion
 
-import network.pokt.pocketcore.PocketCore
-import network.pokt.pocketcore.model.Wallet
+import network.pokt.core.Pocket
+import network.pokt.core.model.Wallet
 
-class PocketAion(devId: String, netId: Array<String>, maxNodes: Int = 5, requestTimeOut: Int = 1000) : PocketCore(devId, "AION", netId, maxNodes, requestTimeOut) {
+class PocketAion(devId: String, netId: Array<String>, maxNodes: Int = 5, requestTimeOut: Int = 1000) : Pocket(devId, "AION", netId, maxNodes, requestTimeOut) {
 
 
     override fun createWallet(subnetwork: String, data: String): Wallet {

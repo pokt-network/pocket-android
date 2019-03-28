@@ -1,4 +1,4 @@
-package network.pokt.pocketcore.model
+package network.pokt.core.model
 
 import org.json.JSONArray
 import org.json.JSONObject
@@ -6,9 +6,7 @@ import org.json.JSONObject
 
 class Dispatch(var configuration:Configuration){
 
-    private fun getBlockchains(): ArrayList<Blockchain> {
-        return this.configuration.blockChains
-    }
+    var nodes: List<Node> = ArrayList()
 
     private fun createNodesArray(jsonObject: JSONObject): ArrayList<Node> {
         var nodes = arrayListOf<Node>()
@@ -38,7 +36,7 @@ class Dispatch(var configuration:Configuration){
         }
 
         if (nodes.isNotEmpty()) {
-            this.configuration.nodes = nodes
+            this.nodes = nodes
         }
 
         return nodes

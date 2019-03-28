@@ -5,7 +5,7 @@ import org.liquidplayer.javascript.JSContext
 import org.liquidplayer.javascript.JSException
 import network.pokt.pocketaion.util.RawFileUtil
 import network.pokt.pocketaion.R
-import network.pokt.pocketcore.model.Wallet
+import network.pokt.core.model.Wallet
 
 class ImportWalletOperation(context: Context) : BaseOperation(context) {
 

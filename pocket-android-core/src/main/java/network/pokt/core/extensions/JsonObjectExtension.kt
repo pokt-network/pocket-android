@@ -1,4 +1,4 @@
-package network.pokt.pocketcore.extensions
+package network.pokt.core.extensions
 
 import org.json.JSONObject
 

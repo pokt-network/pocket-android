@@ -1,7 +1,7 @@
 package network.pokt.pocketaion.operation
 
 import android.content.Context
-import network.pokt.pocketcore.model.Wallet
+import network.pokt.core.model.Wallet
 import org.liquidplayer.javascript.JSContext
 import org.liquidplayer.javascript.JSException
 import network.pokt.pocketaion.util.RawFileUtil

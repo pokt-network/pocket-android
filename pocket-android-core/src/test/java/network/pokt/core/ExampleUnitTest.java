@@ -1,4 +1,4 @@
-package network.pokt.pocketcore;
+package network.pokt.core;
 
 import org.junit.Test;
 

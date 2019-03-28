@@ -1,4 +1,4 @@
-package network.pokt.pocketcore.net
+package network.pokt.core.net
 
 class Constants {
     companion object {
