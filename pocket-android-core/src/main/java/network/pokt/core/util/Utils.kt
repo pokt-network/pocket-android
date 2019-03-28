@@ -1,4 +1,4 @@
-package network.pokt.pocketcore.util
+package network.pokt.core.util
 
 class Utils {
 

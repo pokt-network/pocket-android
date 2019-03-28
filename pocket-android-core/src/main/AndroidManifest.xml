@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="network.pokt.pocketcore">
+          package="network.pokt.core">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <application
+            android:usesCleartextTraffic="true"
+    ></application>
 </manifest>
 
 

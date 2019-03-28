@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
-import network.pokt.pocketcore.PocketCore
+import network.pokt.core.Pocket
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val pocketCore = PocketCore("DEVID1", "ETH", arrayOf("4","1"))
+        val pocketCore = Pocket("DEVID1", "ETH", arrayOf("4","1"))
 
         pocketCore.retrieveNodes { nodes ->
             if (!nodes.isNullOrEmpty()) {

@@ -1,4 +1,4 @@
-package network.pokt.pocketcore.model
+package network.pokt.core.model
 
 class Node(network: String, netId: String, ipPort: String) {
 

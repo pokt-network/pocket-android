@@ -1,6 +1,6 @@
 package network.pokt.pocketaion.operation
 
-import network.pokt.pocketcore.model.Wallet
+import network.pokt.core.model.Wallet
 import org.json.JSONException
 import org.json.JSONObject
 import org.liquidplayer.javascript.JSObject

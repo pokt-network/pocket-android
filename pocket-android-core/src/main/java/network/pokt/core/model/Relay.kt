@@ -1,6 +1,6 @@
-package network.pokt.pocketcore.model
+package network.pokt.core.model
 
-import network.pokt.pocketcore.util.Utils
+import network.pokt.core.util.Utils
 
 class Relay(blockchain: String, netId: String, data: String, devId: String) {
 
