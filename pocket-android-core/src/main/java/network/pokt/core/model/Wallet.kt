@@ -1,5 +1,3 @@
 package network.pokt.core.model
 
-import org.json.JSONObject
-
-class Wallet (privateKey: String, address: String, network: String, netID: String, data: Any?)
+class Wallet (var privateKey: String, var address: String, var network: String, var netID: String, var data: Any?)
