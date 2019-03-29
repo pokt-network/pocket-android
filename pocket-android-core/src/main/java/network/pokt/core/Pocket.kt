@@ -9,14 +9,22 @@ import org.json.JSONObject
 abstract class Pocket {
 
     private val dispatch: Dispatch
+    val devID: String
+    private val netIds: Array<String>
+    private val maxNodes: Int
+    private val requestTimeOut: Int
 
-    constructor(devId: String, network: String, netIds: Array<String>, maxNodes: Int = 5, requestTimeOut: Int = 1000) {
+    constructor(devID: String, network: String, netIds: Array<String>, maxNodes: Int = 5, requestTimeOut: Int = 1000) {
         var blockchains = arrayListOf<Blockchain>()
         netIds.forEach { netId ->
             blockchains.add(Blockchain(network, netId))
         }
 
-        this.dispatch = Dispatch(Configuration(devId, blockchains, maxNodes, requestTimeOut))
+        this.dispatch = Dispatch(Configuration(devID, blockchains, maxNodes, requestTimeOut))
+        this.devID = devID
+        this.netIds = netIds
+        this.maxNodes = maxNodes
+        this.requestTimeOut = requestTimeOut
     }
 
     // Abstract interfaces to be overwritten
@@ -52,6 +60,10 @@ abstract class Pocket {
         send(Relay(blockchain, netID, data, this.dispatch.configuration.devId), callback)
     }
 
+    fun addBlockchain(network: String, netID: String) {
+        this.dispatch.configuration.blockChains.add(Blockchain(network, netID))
+    }
+
     // Private interface
     private fun getRandomNode(nodes: List<Node>): Node? {
         return nodes[(0 until nodes.count()).random()]
@@ -84,7 +96,8 @@ abstract class Pocket {
         }
     }
 
-    private fun retrieveNodes(callback: (error: PocketError?, nodes: List<Node>?) -> Unit) { PocketAPI.retrieveNodes(dispatch.configuration) { error, nodesJSON ->
+    private fun retrieveNodes(callback: (error: PocketError?, nodes: List<Node>?) -> Unit) {
+        PocketAPI.retrieveNodes(dispatch.configuration) { error, nodesJSON ->
             var pocketError = error ?: null
             var nodeList: List<Node>?
 
