@@ -1,51 +1,47 @@
-package network.pokt.aion.network
+package network.pokt.eth.network
 
 import android.content.Context
-import network.pokt.aion.AionContract
-import network.pokt.aion.PocketAion
-import network.pokt.aion.models.AionRelay
-import network.pokt.aion.rpc.EthRpc
-import network.pokt.aion.rpc.NetRpc
-import network.pokt.aion.rpc.callbacks.*
-import network.pokt.aion.rpc.types.ObjectOrBoolean
-import network.pokt.aion.util.HexStringUtil
+import network.pokt.eth.rpc.callbacks.*
+import network.pokt.eth.EthContract
+import network.pokt.eth.PocketEth
+import network.pokt.eth.models.EthRelay
+import network.pokt.eth.rpc.EthRpc
+import network.pokt.eth.rpc.NetRpc
+import network.pokt.eth.rpc.types.ObjectOrBoolean
+import network.pokt.eth.util.HexStringUtil
 import network.pokt.core.errors.PocketError
 import network.pokt.core.model.Wallet
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
-import org.liquidplayer.javascript.JSON
 import java.math.BigInteger
 
-class AionNetwork {
+class EthNetwork {
 
     val netID: String
-    val pocketAion: PocketAion
+    val pocketEth: PocketEth
     val eth: EthRpc
     val net: NetRpc
     val devID: String
 
-    constructor(netID: String, pocketAion: PocketAion) {
+    constructor(netID: String, pocketEth: PocketEth) {
         this.netID = netID
-        this.pocketAion = pocketAion
-        this.devID = pocketAion.devID
+        this.pocketEth = pocketEth
+        this.devID = pocketEth.devID
         this.eth = EthRpc(this)
         this.net = NetRpc(this)
     }
 
     fun getContext() : Context {
-        return this.pocketAion.context
-    }
-
-    fun createWallet() : Wallet {
-        return this.pocketAion.createWallet(PocketAion.NETWORK, this.netID, null)
+        return this.pocketEth.context
     }
 
     fun importWallet(privateKey: String) : Wallet {
-        return this.pocketAion.importWallet(privateKey, null, PocketAion.NETWORK, this.netID, null)
+        return this.pocketEth.importWallet(privateKey, null, PocketEth.NETWORK, this.netID, null)
     }
 
-    fun createSmartContractInstance(contractAddress: String, abiDefinition: JSONArray) : AionContract {
-        return AionContract(this, contractAddress, abiDefinition)
+    fun createSmartContractInstance(contractAddress: String, abiDefinition: JSONArray) : EthContract {
+        return EthContract(this, contractAddress, abiDefinition)
     }
 
     private fun parseErrorResponse(jsonResponse: JSONObject) : PocketError? {
@@ -58,8 +54,8 @@ class AionNetwork {
         }
     }
 
-    fun sendWithStringResult(aionRelay: AionRelay, callback: StringCallback) {
-        this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
+    fun sendWithStringResult(relay: EthRelay, callback: StringCallback) {
+        this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
             var result: String? = null
 
@@ -83,8 +79,8 @@ class AionNetwork {
         }
     }
 
-    fun sendWithBooleanResult(aionRelay: AionRelay, callback: BooleanCallback) {
-        this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
+    fun sendWithBooleanResult(relay: EthRelay, callback: BooleanCallback) {
+        this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
             var result: Boolean? = null
 
@@ -107,8 +103,8 @@ class AionNetwork {
         }
     }
 
-    fun sendWithBigIntegerResult(aionRelay: AionRelay, callback: BigIntegerCallback) {
-        this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
+    fun sendWithBigIntegerResult(relay: EthRelay, callback: BigIntegerCallback) {
+        this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
             var result: BigInteger? = null
 
@@ -132,8 +128,8 @@ class AionNetwork {
         }
     }
 
-    fun sendWithJSONObjectResult(aionRelay: AionRelay, callback: JSONObjectCallback) {
-        this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
+    fun sendWithJSONObjectResult(relay: EthRelay, callback: JSONObjectCallback) {
+        this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
             var result: JSONObject? = null
 
@@ -145,20 +141,17 @@ class AionNetwork {
                 error = parseErrorResponse(it)
 
                 result = when (error) {
-                    null -> it.getJSONObject("result")
+                    null -> it.optJSONObject("result")
                     else -> null
                 }
             }
 
-            if (error == null && result == null) {
-                error = PocketError("Unknown error parsing response: $jsonResponse")
-            }
             callback.invoke(error, result)
         }
     }
 
-    fun sendWithJSONArrayResult(aionRelay: AionRelay, callback: JSONArrayCallback) {
-        this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
+    fun sendWithJSONArrayResult(relay: EthRelay, callback: JSONArrayCallback) {
+        this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
             var result: JSONArray? = null
 
@@ -182,8 +175,8 @@ class AionNetwork {
         }
     }
 
-    fun sendWithJSONObjectOrBooleanResult(aionRelay: AionRelay, callback: JSONObjectOrBooleanCallback) {
-        this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
+    fun sendWithJSONObjectOrBooleanResult(relay: EthRelay, callback: JSONObjectOrBooleanCallback) {
+        this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
             var result: ObjectOrBoolean? = null
 
