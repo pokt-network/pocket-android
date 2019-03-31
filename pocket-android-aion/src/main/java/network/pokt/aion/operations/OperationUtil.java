@@ -7,7 +7,7 @@ import org.liquidplayer.javascript.JSObject;
 
 public class OperationUtil {
 
-    public static Wallet parseWalletObj(JSObject walletObj, @NotNull String network, @NotNull String subnetwork) {
+    public static Wallet parseWalletObj(JSObject walletObj, @NotNull String network, @NotNull String subnetwork, JSONObject data) {
         Wallet result = null;
 
         // Extract the address and private key
@@ -23,7 +23,7 @@ public class OperationUtil {
         }
 
         // Create the wallet
-        result = new Wallet(privateKey, address, network, subnetwork, null);
+        result = new Wallet(privateKey, address, network, subnetwork, data);
 
         return result;
     }

@@ -7,6 +7,7 @@ import network.pokt.core.model.Wallet
 import network.pokt.aion.operations.CreateWalletOperation
 import network.pokt.aion.operations.ImportWalletOperation
 import network.pokt.core.errors.PocketError
+import org.json.JSONObject
 
 class PocketAion @Throws constructor(
     val context: Context,
@@ -70,7 +71,7 @@ class PocketAion @Throws constructor(
         address: String?,
         network: String,
         netID: String,
-        data: Any?
+        data: JSONObject?
     ): Wallet {
         val result: Wallet
         val importWalletOperation = ImportWalletOperation(this.context, NETWORK, netID, privateKey)
@@ -84,9 +85,9 @@ class PocketAion @Throws constructor(
     }
 
     @Throws
-    override fun createWallet(network: String, netID: String, data: Any?): Wallet {
+    override fun createWallet(network: String, netID: String, data: JSONObject?): Wallet {
         val result: Wallet
-        val createWalletOperation = CreateWalletOperation(this.context, NETWORK, netID)
+        val createWalletOperation = CreateWalletOperation(this.context, NETWORK, netID, data)
         val operationSuccessful = createWalletOperation.startProcess()
         val isError = createWalletOperation.errorMsg != null
         result = when {
