@@ -56,7 +56,7 @@ public class PocketTest {
             public void execute(Semaphore semaphore) {
                 String address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f";
                 String data = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"".concat(address).concat("\",\"latest\"],\"id\":67}");
-                Relay relay = new Relay("ETH", "4", data, "DEVID1");
+                Relay relay = new Relay("ETH", "4", "DEVID1", data);
                 plugin.send(relay, (pocketError, jsonObject) -> {
                     assertNull(pocketError);
                     assertNotNull(jsonObject);
@@ -78,7 +78,7 @@ public class PocketTest {
                 String address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f";
                 String data = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"".concat(address).concat("\",\"latest\"],\"id\":67}");
                 plugin.send("ETH", "4", data, (pocketError, jsonObject) -> {
-                    assertNull(pocketError);
+                     assertNull(pocketError);
                     assertNotNull(jsonObject);
                     semaphore.release();
                     return Unit.INSTANCE;
