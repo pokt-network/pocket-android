@@ -29,10 +29,10 @@ abstract class Pocket {
 
     // Abstract interfaces to be overwritten
     @Throws
-    abstract fun createWallet(network: String, netID: String, data: Any?): Wallet
+    abstract fun createWallet(network: String, netID: String, data: JSONObject?): Wallet
 
     @Throws
-    abstract fun importWallet(privateKey: String, address: String?, network: String, netID: String, data: Any?): Wallet
+    abstract fun importWallet(privateKey: String, address: String?, network: String, netID: String, data: JSONObject?): Wallet
 
     // Public interfaces
     fun send(relay: Relay, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
