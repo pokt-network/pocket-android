@@ -57,7 +57,7 @@ abstract class Pocket {
     }
 
     open fun send(blockchain: String, netID: String, data: String, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
-        send(Relay(blockchain, netID, data, this.dispatch.configuration.devId), callback)
+        send(Relay(blockchain, netID, this.dispatch.configuration.devId, data), callback)
     }
 
     fun addBlockchain(network: String, netID: String) {
