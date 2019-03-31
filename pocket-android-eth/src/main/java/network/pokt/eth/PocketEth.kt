@@ -10,6 +10,7 @@ import org.web3j.crypto.ECKeyPair
 import org.web3j.crypto.Keys
 import network.pokt.eth.util.HexStringUtil
 import org.bouncycastle.jce.provider.BouncyCastleProvider
+import org.json.JSONObject
 import java.security.Security
 
 
@@ -99,7 +100,7 @@ class PocketEth @Throws constructor(
         address: String?,
         network: String,
         netID: String,
-        data: Any?
+        data: JSONObject?
     ): Wallet {
         val result: Wallet?
         // Try re-creating the wallet
@@ -116,7 +117,7 @@ class PocketEth @Throws constructor(
     }
 
     @Throws
-    override fun createWallet(network: String, netID: String, data: Any?): Wallet {
+    override fun createWallet(network: String, netID: String, data: JSONObject?): Wallet {
         // Try creating the wallet
         val result: Wallet
         val ecKeyPair: ECKeyPair
@@ -130,7 +131,7 @@ class PocketEth @Throws constructor(
         val address = Keys.getAddress(ecKeyPair)
 
         try {
-            result = this.importWallet(privateKey, address, network, netID, null)
+            result = this.importWallet(privateKey, address, network, netID, data)
         } catch (e: Exception) {
             throw PocketError(e.message ?: "Unknown error creating wallet")
         }
