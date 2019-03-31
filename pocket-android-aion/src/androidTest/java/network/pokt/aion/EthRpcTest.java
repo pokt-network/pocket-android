@@ -34,7 +34,6 @@ import static org.junit.Assert.assertNull;
 public class EthRpcTest {
 
     PocketAion pocketAion;
-    static final String MASTERY_SUBNETWORK = "32";
     String testAccountAddress = "0xa05b88ac239f20ba0a4d2f0edac8c44293e9b36fa937fb55bf7a1cd61a60f036";
     String testTxHashHex = "0xab24681fc474b4a6cbc9489a7595634abbfcd1ef205e1807df53fc70619496bd";
     String blockHashHex = "0x1ab636692ebfaf9a181d4671e0f1f3d3bc8bd9a9ec91c8a19dcbcc06a9975390";
