@@ -34,10 +34,8 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class AionContractTest {
 
-    final String MASTERY_SUBNETWORK = "32";
     final String pocketTestContractAddress = "0xA0707404B9BE7a5F630fCed3763d28FA5C988964fDC25Aa621161657a7Bf4b89";
-    String testAccountAddress = "0xa05b88ac239f20ba0a4d2f0edac8c44293e9b36fa937fb55bf7a1cd61a60f036";
-    String testAccountPK = "0x2b5d6fd899ccc148b5f85b4ea20961678c04d70055b09dac7857ea430757e6badb4cfe129e670e2fef1b632ed0eab9572954feebbea9cb32134b284763acd34e";
+    String testAccountPK = "0x1593800fe636f6fe996a0148c4ee1ecd6ff55a47b351a40f2da9d68815e1c6c958a09d74260842d51592f7be77e02171e4aea295078de50e5695835eee743932";
 
     @Test
     public void useAppContext() {
