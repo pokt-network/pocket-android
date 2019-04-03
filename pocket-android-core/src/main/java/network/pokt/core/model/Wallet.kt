@@ -31,11 +31,11 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
         private const val netIDKey = "netID"
         private const val dataKey = "data"
 
-        fun recordKey(network: String?, netID: String?, address: String?) : String {
+        private fun recordKey(network: String, netID: String, address: String) : String {
             return "$network/$netID/$address"
         }
 
-        fun isSaved(network: String?, netID: String?, address: String?, context: Context): Boolean {
+        fun isSaved(network: String, netID: String, address: String, context: Context): Boolean {
             Hawk.init(context).build()
             return Hawk.contains(Wallet.recordKey(network, netID, address))
         }
