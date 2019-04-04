@@ -1,6 +1,7 @@
 package network.pokt.core.net
 
 import com.google.gson.Gson
+import network.pokt.core.BuildConfig
 import network.pokt.core.errors.PocketError
 import network.pokt.core.model.Configuration
 import network.pokt.core.model.Node
@@ -67,7 +68,7 @@ internal class PocketAPI {
         }
 
         fun send(report: Report, reportCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
-            val url = Constants.DISPATCH_NODE_URL.plus(Constants.REPORT_PATH)
+            val url = BuildConfig.DISPATCH_NODE_URL.plus(Constants.REPORT_PATH)
             val json = gson.toJson(report)
             val request = Request.Builder()
                 .url(url)
@@ -79,7 +80,7 @@ internal class PocketAPI {
         }
 
         fun retrieveNodes(configuration: Configuration, callback: (error: PocketError?, nodesJSON: JSONArray?) -> Unit) {
-            val url = Constants.DISPATCH_NODE_URL.plus(Constants.DISPATCH_PATH)
+            val url = BuildConfig.DISPATCH_NODE_URL.plus(Constants.DISPATCH_PATH)
             val json = gson.toJson(configuration)
             val request = Request.Builder()
                 .url(url)
