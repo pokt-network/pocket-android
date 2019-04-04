@@ -1,1 +1,1 @@
-include ':pocket-android', ':pocket-android-core', ':pocket-android-eth', ':pocket-android-aion'
+include ':pocket-android-core', ':pocket-android-eth', ':pocket-android-aion'
