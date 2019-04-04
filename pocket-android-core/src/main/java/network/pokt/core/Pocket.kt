@@ -65,8 +65,17 @@ abstract class Pocket {
     }
 
     // Private interface
-    private fun getRandomNode(nodes: List<Node>): Node? {
-        return nodes[(0 until nodes.count()).random()]
+    private fun getRandomNode(nodes: List<Node>?): Node? {
+        return when(nodes) {
+            null -> return null
+            else -> {
+                if (nodes.isEmpty()) {
+                    null
+                } else {
+                    nodes[(0 until nodes.count()).random()]
+                }
+            }
+        }
     }
 
     private fun getNode(network: String, netID: String, retrieveNodes: Boolean = false, callback: (error: PocketError?, node: Node?) -> Unit) {

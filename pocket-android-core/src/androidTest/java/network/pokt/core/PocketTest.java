@@ -48,6 +48,26 @@ public class PocketTest {
     }
 
     @Test
+    public void testNoNodesAvailable() {
+        // Note the invalid networkName on the constructor
+        PocketTestPlugin plugin = new PocketTestPlugin("DEVID1", "TEST", new String[]{"4"}, 5, 60000);
+        SemaphoreUtil.executeSemaphoreCallback(new SemaphoreUtil.SemaphoreCallback() {
+            @Override
+            public void execute(Semaphore semaphore) {
+                String address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f";
+                String data = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"".concat(address).concat("\",\"latest\"],\"id\":67}");
+                Relay relay = new Relay("TEST", "4", "DEVID1", data);
+                plugin.send(relay, (pocketError, jsonObject) -> {
+                    assertNotNull(pocketError);
+                    assertNull(jsonObject);
+                    semaphore.release();
+                    return Unit.INSTANCE;
+                });
+            }
+        });
+    }
+
+    @Test
     public void testSendRelay() {
         PocketTestPlugin plugin = this.plugin;
 
