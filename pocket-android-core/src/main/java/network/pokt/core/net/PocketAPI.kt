@@ -19,7 +19,7 @@ internal class PocketAPI {
     companion object {
         open class PocketApiCallback : Callback {
 
-            var responseCallback: (error: PocketError?, response: JSONObject?) -> Unit = { pocketError: PocketError?, jsonObject: JSONObject? -> }
+            var responseCallback: (error: PocketError?, response: JSONObject?) -> Unit = { _: PocketError?, _: JSONObject? -> }
 
             constructor(responseCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
                 this.responseCallback = responseCallback ?: this.responseCallback
@@ -100,12 +100,12 @@ internal class PocketAPI {
                 override fun onResponse(call: Call, response: Response) {
                     response.body()?.let {
                         responseBody ->
-                        val json = JSONTokener(responseBody.string()).nextValue()
-                        when (json) {
-                            is JSONObject -> callback.invoke(PocketError("Invalid json format for $json"), null)
-                            is JSONArray -> callback.invoke(null, json)
+                        val jsonObj = JSONTokener(responseBody.string()).nextValue()
+                        when (jsonObj) {
+                            is JSONObject -> callback.invoke(PocketError("Invalid json format for $jsonObj"), null)
+                            is JSONArray -> callback.invoke(null, jsonObj)
                             else -> {
-                                callback.invoke(PocketError("Invalid JSON Array $json"), null)
+                                callback.invoke(PocketError("Invalid JSON Array $jsonObj"), null)
                             }
                         }
                         return@onResponse

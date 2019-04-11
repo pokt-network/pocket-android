@@ -12,7 +12,7 @@ import network.pokt.core.errors.WalletPersistenceError
 typealias WalletSaveListener = (walletPersistenceError: WalletPersistenceError?) -> Unit
 typealias WalletRetrieveListener = (walletPersistenceError: WalletPersistenceError?, wallet: Wallet?) -> Unit
 
-open class Wallet(var privateKey: String, var address: String, var network: String, var netID: String, var data: JSONObject?) : JSONObject() {
+open class Wallet(var privateKey: String, var address: String, var network: String, var netID: String) : JSONObject() {
     private val crypto = ECSymmetric()
 
     init {
@@ -20,7 +20,6 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
         this.put(privateKeyKey, privateKey)
         this.put(networkKey, network)
         this.put(netIDKey, netID)
-        this.put(dataKey, data)
     }
 
     companion object {
@@ -29,7 +28,6 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
         private const val privateKeyKey = "privateKey"
         private const val networkKey = "network"
         private const val netIDKey = "netID"
-        private const val dataKey = "data"
 
         private fun recordKey(network: String, netID: String, address: String) : String {
             return "$network/$netID/$address"
@@ -76,7 +74,6 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
 
             var encryptedJSON = when(encryptedWalletJson) {
                 "" -> throw WalletPersistenceError("Error retrieving wallet from local storage")
-                null -> throw WalletPersistenceError("Error retrieving wallet from local storage")
                 else -> encryptedWalletJson
             }
 
@@ -94,8 +91,7 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
                         val address = decryptedJSONWallet.getString(Wallet.addressKey)
                         val network = decryptedJSONWallet.getString(Wallet.networkKey)
                         val netID = decryptedJSONWallet.getString(Wallet.netIDKey)
-                        val data = decryptedJSONWallet.optJSONObject(Wallet.dataKey)
-                        listener.invoke(null, Wallet(privateKey, address, network, netID, data))
+                        listener.invoke(null, Wallet(privateKey, address, network, netID))
                     } catch (jsonEx: JSONException) {
                         listener.invoke(WalletPersistenceError(jsonEx.message ?: "Error decrypting wallet data"),null)
                     }

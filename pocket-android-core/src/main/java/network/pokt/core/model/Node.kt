@@ -20,7 +20,6 @@ class Node(network: String, netId: String, ipPort: String) {
             val portStr = ipPortData[1]
             this.port = when(portStr) {
                 "" -> defaultHTTPPort
-                null -> defaultHTTPPort
                 else -> portStr.toInt()
             }
         } else {

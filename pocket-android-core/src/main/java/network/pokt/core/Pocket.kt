@@ -27,13 +27,6 @@ abstract class Pocket {
         this.requestTimeOut = requestTimeOut
     }
 
-    // Abstract interfaces to be overwritten
-    @Throws
-    abstract fun createWallet(network: String, netID: String, data: JSONObject?): Wallet
-
-    @Throws
-    abstract fun importWallet(privateKey: String, address: String?, network: String, netID: String, data: JSONObject?): Wallet
-
     // Public interfaces
     fun send(relay: Relay, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
         if (!relay.isValid()) {
@@ -107,7 +100,7 @@ abstract class Pocket {
 
     private fun retrieveNodes(callback: (error: PocketError?, nodes: List<Node>?) -> Unit) {
         PocketAPI.retrieveNodes(dispatch.configuration) { error, nodesJSON ->
-            var pocketError = error ?: null
+            var pocketError = error
             var nodeList: List<Node>?
 
             try {
