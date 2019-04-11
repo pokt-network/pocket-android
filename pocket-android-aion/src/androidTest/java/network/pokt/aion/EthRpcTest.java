@@ -406,7 +406,7 @@ public class EthRpcTest {
                 final Wallet wallet;
                 try {
 
-                    wallet = pocketAion.importWallet(testAccountPK, null, PocketAion.Companion.getNETWORK(), PocketAion.Networks.MASTERY.getNetID(), null);
+                    wallet = pocketAion.getMastery().importWallet(testAccountPK);
 
                     pocketAion.getMastery().getEth().getTransactionCount(wallet.getAddress(), null, new Function2<PocketError, BigInteger, Unit>() {
                         @Override

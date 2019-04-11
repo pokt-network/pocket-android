@@ -37,7 +37,7 @@ public class ImportWalletOperation extends BaseOperation {
         jsContext.evaluateScript(String.format(RawFileUtil.readRawTextFile(this.context, R.raw.import_wallet), this.privateKey));
         // Extract the address and private key
         JSObject walletObj = jsContext.property("wallet").toObject();
-        this.wallet = OperationUtil.parseWalletObj(walletObj, this.network, this.subnetwork, null);
+        this.wallet = OperationUtil.parseWalletObj(walletObj, this.network, this.subnetwork);
     }
 
     @Override

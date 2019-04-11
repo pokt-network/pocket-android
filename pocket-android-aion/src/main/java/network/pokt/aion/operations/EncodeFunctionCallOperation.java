@@ -63,8 +63,15 @@ public class EncodeFunctionCallOperation extends BaseOperation {
         List<String> result = new ArrayList<>();
         for (Object objParam : rpcParams) {
             String currStr;
-            if (objParam instanceof List) {
-                currStr = "[" + TextUtils.join(",", objectsAsFunctionParams((List<Object>)objParam)) + "]";
+            if (objParam instanceof List<?>) {
+                List<?> castedList = (List<?>) objParam;
+                List<Object> castedParamsList = new ArrayList<>(castedList);
+                String parsedJoinedParams = TextUtils.join(",", objectsAsFunctionParams(castedParamsList));
+                if (parsedJoinedParams != null && !parsedJoinedParams.isEmpty()) {
+                    currStr = "[" + parsedJoinedParams + "]";
+                } else {
+                    currStr = "[]";
+                }
             } else {
                 currStr = objectAsFunctionParam(objParam);
             }
