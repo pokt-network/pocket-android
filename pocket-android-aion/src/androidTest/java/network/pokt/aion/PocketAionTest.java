@@ -34,15 +34,15 @@ public class PocketAionTest {
 
     @Test
     public void testCreateWallet() {
-        Wallet wallet = this.pocketAion.createWallet(PocketAion.Companion.getNETWORK(), PocketAion.Networks.MASTERY.getNetID(), null);
+        Wallet wallet = this.pocketAion.getMastery().createWallet();
         assertNotNull(wallet);
     }
 
     @Test
     public void testImportWallet() {
-        Wallet wallet = this.pocketAion.createWallet(PocketAion.Companion.getNETWORK(), PocketAion.Networks.MASTERY.getNetID(), null);
+        Wallet wallet = this.pocketAion.getMastery().createWallet();
         assertNotNull(wallet);
-        Wallet importedWallet = this.pocketAion.importWallet(wallet.getPrivateKey(),  wallet.getAddress(), wallet.getNetwork(), wallet.getNetID(), null);
+        Wallet importedWallet = this.pocketAion.getMastery().importWallet(wallet.getPrivateKey());
         assertNotNull(importedWallet);
     }
 }

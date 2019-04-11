@@ -89,11 +89,10 @@ class EthRpc
     }
 
     fun getCode(address: String, blockTag: BlockTag?, callback: StringCallback) {
-        var blockTag = blockTag
-        blockTag = BlockTag.tagOrLatest(blockTag)
+        var parsedBlockTag = BlockTag.tagOrLatest(blockTag)
         val rpcParams = ArrayList<Any>()
         rpcParams.add(address)
-        rpcParams.add(blockTag.blockTagString)
+        rpcParams.add(parsedBlockTag.blockTagString)
         val relay = AionRelay(this.aionNetwork.netID, this.aionNetwork.devID, EthRpc.AionRpcMethod.eth_getCode.name, JSONArray(rpcParams))
         this.aionNetwork.sendWithStringResult(relay, callback)
     }
@@ -288,8 +287,7 @@ class EthRpc
         value: BigInteger?,
         data: String?
     ): AionRelay {
-        var blockTag = blockTag
-        blockTag = BlockTag.tagOrLatest(blockTag)
+        var blockTag = BlockTag.tagOrLatest(blockTag)
         val callTxParams = HashMap<String, Any>()
         callTxParams["to"] = toAddress
         if (fromAddress != null) {

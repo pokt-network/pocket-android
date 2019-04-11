@@ -14,18 +14,16 @@ public class CreateWalletOperation extends BaseOperation {
 
     private String network;
     private String subnetwork;
-    private JSONObject data;
     private Wallet wallet;
 
     CreateWalletOperation(Context context) {
         super(context);
     }
 
-    public CreateWalletOperation(Context context, @NotNull String network, @NotNull String subnetwork, JSONObject data) {
+    public CreateWalletOperation(Context context, @NotNull String network, @NotNull String netID) {
         this(context);
         this.network = network;
-        this.subnetwork = subnetwork;
-        this.data = data;
+        this.subnetwork = netID;
     }
 
     @Override
@@ -33,7 +31,7 @@ public class CreateWalletOperation extends BaseOperation {
         // Run the script to create the wallet in JS
         jsContext.evaluateScript(RawFileUtil.readRawTextFile(this.context, R.raw.create_wallet));
         JSObject walletObj = jsContext.property("wallet").toObject();
-        this.wallet = OperationUtil.parseWalletObj(walletObj, this.network, this.subnetwork, this.data);
+        this.wallet = OperationUtil.parseWalletObj(walletObj, this.network, this.subnetwork);
     }
 
     public Wallet getWallet() {

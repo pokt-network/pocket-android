@@ -37,11 +37,36 @@ class AionNetwork {
     }
 
     fun createWallet() : Wallet {
-        return this.pocketAion.createWallet(PocketAion.NETWORK, this.netID, null)
+        val result: Wallet
+        val createWalletOperation = network.pokt.aion.operations.CreateWalletOperation(
+            this.pocketAion.context,
+            network.pokt.aion.PocketAion.NETWORK,
+            netID
+        )
+        val operationSuccessful = createWalletOperation.startProcess()
+        val isError = createWalletOperation.errorMsg != null
+        result = when {
+            operationSuccessful && !isError -> createWalletOperation.wallet
+            else -> throw PocketError(createWalletOperation.errorMsg)
+        }
+        return result
     }
 
     fun importWallet(privateKey: String) : Wallet {
-        return this.pocketAion.importWallet(privateKey, null, PocketAion.NETWORK, this.netID, null)
+        val result: Wallet
+        val importWalletOperation = network.pokt.aion.operations.ImportWalletOperation(
+            this.pocketAion.context,
+            network.pokt.aion.PocketAion.NETWORK,
+            netID,
+            privateKey
+        )
+        val operationSuccessful = importWalletOperation.startProcess()
+        val isError = importWalletOperation.errorMsg != null
+        result = when {
+            operationSuccessful && !isError -> importWalletOperation.wallet
+            else -> throw PocketError(importWalletOperation.errorMsg)
+        }
+        return result
     }
 
     fun createSmartContractInstance(contractAddress: String, abiDefinition: JSONArray) : AionContract {

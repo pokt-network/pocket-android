@@ -17,7 +17,7 @@ import network.pokt.core.model.Wallet
 
 
 
-class AionContract// Public interface
+class AionContract
 @Throws(JSONException::class)
 constructor(
     val aionNetwork: AionNetwork,
@@ -45,12 +45,12 @@ constructor(
             throw AionContractException("Invalid function name or function is not constant")
         }
 
-        var functionParams = when(functionParams) {
+        var parsedFunctionParams = when(functionParams) {
             null -> ArrayList()
             else -> functionParams
         }
 
-        val data: String = function.getEncodedFunctionCall(this.aionNetwork.getContext(), functionParams) ?: throw AionContractException("Error generating function call data")
+        val data: String = function.getEncodedFunctionCall(this.aionNetwork.getContext(), parsedFunctionParams) ?: throw AionContractException("Error generating function call data")
 
         this.aionNetwork.eth.call(
             this.contractAddress,
@@ -119,7 +119,7 @@ constructor(
     // Private interface
     @Throws(JSONException::class)
     private fun parseContractFunctions() {
-        for (i in 0 until this.abiDefinition!!.length()) {
+        for (i in 0 until this.abiDefinition.length()) {
             val abiElement = this.abiDefinition.optJSONObject(i)
             val function = Function.parseFunctionElement(abiElement)
             if (function != null) {
