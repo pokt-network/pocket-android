@@ -1,6 +1,5 @@
 package network.pokt.eth.network
 
-import android.content.Context
 import network.pokt.eth.rpc.callbacks.*
 import network.pokt.eth.EthContract
 import network.pokt.eth.PocketEth
@@ -12,14 +11,15 @@ import network.pokt.eth.util.HexStringUtil
 import network.pokt.core.errors.PocketError
 import network.pokt.core.model.Wallet
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
+import org.web3j.crypto.ECKeyPair
+import org.web3j.crypto.Keys
 import java.math.BigInteger
 
 class EthNetwork {
 
     val netID: String
-    val pocketEth: PocketEth
+    private val pocketEth: PocketEth
     val eth: EthRpc
     val net: NetRpc
     val devID: String
@@ -32,12 +32,41 @@ class EthNetwork {
         this.net = NetRpc(this)
     }
 
-    fun getContext() : Context {
-        return this.pocketEth.context
+    @Throws
+    fun importWallet(
+        privateKey: String
+    ): Wallet {
+        val result: Wallet?
+        val ecKeyPair: ECKeyPair
+        val privateKeyBytes: ByteArray
+        try {
+            privateKeyBytes = HexStringUtil.hexStringToByteArray(privateKey)
+            ecKeyPair = ECKeyPair.create(privateKeyBytes)
+        } catch (e: Exception) {
+            throw PocketError(e.message ?: "Unknown error importing wallet")
+        }
+        result = Wallet(ecKeyPair.privateKey.toString(16), HexStringUtil.prependZeroX(Keys.getAddress(ecKeyPair)), PocketEth.NETWORK, netID)
+        return result
     }
 
-    fun importWallet(privateKey: String) : Wallet {
-        return this.pocketEth.importWallet(privateKey, null, PocketEth.NETWORK, this.netID, null)
+    @Throws
+    fun createWallet(): Wallet {
+        val result: Wallet
+        val ecKeyPair: ECKeyPair
+        try {
+            ecKeyPair = Keys.createEcKeyPair()
+        } catch (e: Exception) {
+            throw PocketError(e.message ?: "Unknown error creating wallet")
+        }
+
+        val privateKey = ecKeyPair.privateKey.toString(16)
+
+        try {
+            result = this.importWallet(privateKey)
+        } catch (e: Exception) {
+            throw PocketError(e.message ?: "Unknown error creating wallet")
+        }
+        return result
     }
 
     fun createSmartContractInstance(contractAddress: String, abiDefinition: JSONArray) : EthContract {

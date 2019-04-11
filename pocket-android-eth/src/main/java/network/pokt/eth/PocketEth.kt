@@ -93,48 +93,4 @@ class PocketEth @Throws constructor(
 
         return result
     }
-
-    @Throws
-    override fun importWallet(
-        privateKey: String,
-        address: String?,
-        network: String,
-        netID: String,
-        data: JSONObject?
-    ): Wallet {
-        val result: Wallet?
-        // Try re-creating the wallet
-        val ecKeyPair: ECKeyPair
-        val privateKeyBytes: ByteArray
-        try {
-            privateKeyBytes = HexStringUtil.hexStringToByteArray(privateKey)
-            ecKeyPair = ECKeyPair.create(privateKeyBytes)
-        } catch (e: Exception) {
-            throw PocketError(e.message ?: "Unknown error importing wallet")
-        }
-        result = Wallet(ecKeyPair.privateKey.toString(16), HexStringUtil.prependZeroX(Keys.getAddress(ecKeyPair)), network, netID, data)
-        return result
-    }
-
-    @Throws
-    override fun createWallet(network: String, netID: String, data: JSONObject?): Wallet {
-        // Try creating the wallet
-        val result: Wallet
-        val ecKeyPair: ECKeyPair
-        try {
-            ecKeyPair = Keys.createEcKeyPair()
-        } catch (e: Exception) {
-            throw PocketError(e.message ?: "Unknown error creating wallet")
-        }
-
-        val privateKey = ecKeyPair.privateKey.toString(16)
-        val address = Keys.getAddress(ecKeyPair)
-
-        try {
-            result = this.importWallet(privateKey, address, network, netID, data)
-        } catch (e: Exception) {
-            throw PocketError(e.message ?: "Unknown error creating wallet")
-        }
-        return result
-    }
 }
