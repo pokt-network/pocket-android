@@ -25,7 +25,7 @@ public class PocketEthTest {
 
     @Before
     @Test
-    public void testPocketAionInitialization() {
+    public void testPocketEthInitialization() {
         Context appContext = InstrumentationRegistry.getTargetContext();
         List<String> netIds = new ArrayList<>();
         netIds.add(PocketEth.Networks.RINKEBY.getNetID());
@@ -36,15 +36,15 @@ public class PocketEthTest {
 
     @Test
     public void testCreateWallet() {
-        Wallet wallet = this.pocketEth.createWallet(PocketEth.Companion.getNETWORK(), PocketEth.Networks.RINKEBY.getNetID(), null);
+        Wallet wallet = this.pocketEth.getRinkeby().createWallet();
         assertNotNull(wallet);
     }
 
     @Test
     public void testImportWallet() {
-        Wallet wallet = this.pocketEth.createWallet(PocketEth.Companion.getNETWORK(), PocketEth.Networks.RINKEBY.getNetID(), null);
+        Wallet wallet = this.pocketEth.getRinkeby().createWallet();
         assertNotNull(wallet);
-        Wallet importedWallet = this.pocketEth.importWallet(wallet.getPrivateKey(),  wallet.getAddress(), wallet.getNetwork(), wallet.getNetID(), null);
+        Wallet importedWallet = this.pocketEth.getRinkeby().importWallet(wallet.getPrivateKey());
         assertNotNull(importedWallet);
     }
 }

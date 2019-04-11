@@ -282,8 +282,7 @@ class EthRpc
         value: BigInteger?,
         data: String?
     ): EthRelay {
-        var blockTag = blockTag
-        blockTag = BlockTag.tagOrLatest(blockTag)
+        var blockTag = BlockTag.tagOrLatest(blockTag)
         val callTxParams = HashMap<String, Any>()
         callTxParams["to"] = toAddress
         if (fromAddress != null) {

@@ -404,7 +404,7 @@ public class EthRpcTest {
             @Override
             public void execute(final Semaphore semaphore) {
                 final Wallet wallet;
-                wallet = pocketEth.importWallet(testAccountPK, null, PocketEth.Companion.getNETWORK(), PocketEth.Networks.RINKEBY.getNetID(), null);
+                wallet = pocketEth.getRinkeby().importWallet(testAccountPK);
                 pocketEth.getRinkeby().getEth().getTransactionCount(wallet.getAddress(), null, new Function2<PocketError, BigInteger, Unit>() {
                     @Override
                     public Unit invoke(PocketError pocketError, BigInteger txCount) {
