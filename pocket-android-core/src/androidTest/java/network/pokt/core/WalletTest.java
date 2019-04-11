@@ -68,7 +68,6 @@ public class WalletTest {
                                 assertEquals(wallet.getNetID(), retrievedWallet.getNetID());
                                 assertEquals(wallet.getAddress(), retrievedWallet.getAddress());
                                 assertEquals(wallet.getPrivateKey(), retrievedWallet.getPrivateKey());
-                                assertEquals(wallet.getData(), retrievedWallet.getData());
                                 wallet.delete(appContext);
                                 semaphore.release();
                                 return null;
@@ -126,6 +125,6 @@ public class WalletTest {
     }
 
     private Wallet generateWallet(String address) {
-        return new Wallet("privateKey", address, "TEST", "1", null);
+        return new Wallet("privateKey", address, "TEST", "1");
     }
 }

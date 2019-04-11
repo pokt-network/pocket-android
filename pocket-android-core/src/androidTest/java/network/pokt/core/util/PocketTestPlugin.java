@@ -12,15 +12,15 @@ public class PocketTestPlugin extends Pocket {
         super(devId, networkName, netIds, maxNodes, requestTimeOut);
     }
 
-    @NotNull
-    @Override
-    public Wallet createWallet(@NotNull String network, @NotNull String netID, @Nullable JSONObject data) {
-        return new Wallet("0x0", "0x1", network, netID, data);
-    }
-
-    @NotNull
-    @Override
-    public Wallet importWallet(@NotNull String privateKey, @Nullable String address, @NotNull String network, @NotNull String netID, @Nullable JSONObject data) {
-        return new Wallet(privateKey, address, network, netID, data);
-    }
+//    @NotNull
+//    @Override
+//    public Wallet createWallet(@NotNull String network, @NotNull String netID, @Nullable JSONObject data) {
+//        return new Wallet("0x0", "0x1", network, netID, data);
+//    }
+//
+//    @NotNull
+//    @Override
+//    public Wallet importWallet(@NotNull String privateKey, @Nullable String address, @NotNull String network, @NotNull String netID, @Nullable JSONObject data) {
+//        return new Wallet(privateKey, address, network, netID, data);
+//    }
 }
