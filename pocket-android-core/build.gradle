@@ -21,7 +21,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "DISPATCH_NODE_URL", "\"https://dispatch.staging.pokt.network\""
+            buildConfigField "String", "DISPATCH_NODE_URL", "\"https://dispatch.pokt.network\""
         }
         release {
             buildConfigField "String", "DISPATCH_NODE_URL", "\"https://dispatch.pokt.network\""
