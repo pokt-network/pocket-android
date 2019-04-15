@@ -3,7 +3,7 @@
     <img src="https://pokt.network/wp-content/uploads/2018/12/Logo-488x228-px.png" alt="drawing" width="340"/>
   </a>
 </div>
-<h1 align="left">PocketAndroid Core</h1>
+<h1 align="left">PocketAndroid Eth</h1>
 <h6 align="left">Official Android client to use with the Pocket Network</h6>
 <div align="lef">
   <a  href="https://developer.android.com/docs">
@@ -37,7 +37,7 @@
     </a>
 </div>
 
-PocketAndroid Core wraps all of the functionalities a developer will need to create their own plugin to start interacting with the Pocket Network:
+PocketAndroid Eth wraps all of the tools a developer will need to begin interacting with the Ethereum network:
 
 Before you can start using the library, you have to get a Developer ID by registering for MVP. [To learn how to register please click here.](https://pocket-network.readme.io/docs/how-to-participate#section-for-developers)
 
@@ -61,11 +61,11 @@ allprojects {
 }
 ```
 
-Now, you will need to add the core package within PocketAndroid to your module's `build.gradle` file, like this:
+Now, you will need to add the eth package within PocketAndroid to your module's `build.gradle` file, like this:
 
 ```
-// Core
-implementation 'network.pocket:core:0.0.1'
+// Eth
+implementation 'network.pocket:eth:0.0.1'
 ```
 
 <h1 align="left">Usage</h1>
