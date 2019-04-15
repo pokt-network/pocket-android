@@ -62,7 +62,6 @@ bintray {
         repo = bintrayRepo
         name = bintrayName
         desc = libraryDescription
-        userOrg = bintrayOrg
 
         websiteUrl = siteUrl
         vcsUrl = gitUrl
@@ -72,7 +71,7 @@ bintray {
         version {
             desc = libraryDescription
             gpg {
-                sign = false //Determines whether to GPG sign the files. The default is false
+                sign = true //Determines whether to GPG sign the files. The default is false
                 passphrase = properties.getProperty("bintray.gpg.password")
                 //Optional. The passphrase for GPG signing'
             }
