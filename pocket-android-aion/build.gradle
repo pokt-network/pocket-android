@@ -38,10 +38,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.github.LiquidPlayer:LiquidCore:0.5.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'network.pocket.android:core:0.0.1'
+    implementation project(':pocket-android-core')
 }
 repositories {
     mavenCentral()
 }
-
-apply from: rootProject.file('release-bintray.gradle')
