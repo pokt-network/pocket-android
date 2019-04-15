@@ -2,9 +2,8 @@
  * Bintray release configuration
  * */
 ext {
-    bintrayRepo = 'pocket-android'
+    bintrayRepo = 'maven'
     bintrayName = POM_BINTRAY_NAME
-    bintrayOrg = 'pokt-network'
 
     publishedGroupId = 'network.pocket.android'
     libraryName = 'PocketAndroid'
