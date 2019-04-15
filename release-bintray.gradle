@@ -1,0 +1,33 @@
+/**
+ * Bintray release configuration
+ * */
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = POM_BINTRAY_NAME
+
+    publishedGroupId = 'network.pocket.android'
+    libraryName = 'PocketAndroid'
+    artifact = POM_ARTIFACT_ID
+    packagingType = POM_PACKAGING
+
+    libraryDescription = POM_DESCRIPTION
+
+    siteUrl = 'https://github.com/pokt-network/pocket-android'
+    gitUrl = 'https://github.com/pokt-network/pocket-android.git'
+
+    libraryVersion = POM_VERSION
+
+    developerId = 'luyzdeleon'
+    developerName = 'Luis C. de Leon'
+    developerEmail = 'luis@pokt.network'
+
+    licenseName = 'MIT'
+    licenseUrl = 'https://github.com/pokt-network/pocket-android/blob/master/LICENSE'
+    allLicenses = ["MIT"]
+}
+
+// Set up the Android Maven publication.
+apply from: rootProject.file('jcenter/maven-install.gradle')
+
+// Publish on Bintray.
+apply from: rootProject.file('jcenter/bintray.gradle')
