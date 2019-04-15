@@ -47,5 +47,3 @@ dependencies {
 repositories {
     mavenCentral()
 }
-
-apply from: rootProject.file('release-bintray.gradle')
