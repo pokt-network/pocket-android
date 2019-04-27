@@ -43,10 +43,14 @@ dependencies {
     implementation 'org.web3j:abi:4.2.0-android'
     implementation 'org.web3j:crypto:4.2.0-android'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'network.pocket.android:core:0.0.1'
+    implementation 'network.pocket.android:core:0.0.2'
 }
 repositories {
     mavenCentral()
+}
+
+ext {
+    publishable = true
 }
 
 apply from: rootProject.file('release-bintray.gradle')

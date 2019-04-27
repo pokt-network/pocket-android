@@ -48,4 +48,8 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    publishable = true
+}
+
 apply from: rootProject.file('release-bintray.gradle')

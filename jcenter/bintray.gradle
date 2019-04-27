@@ -1,17 +1,18 @@
 apply plugin: 'com.jfrog.bintray'
 
-version = libraryVersion
+if (project.publishable == true) {
+    version = libraryVersion
 
-if (project.hasProperty("android")) { // Android libraries
-    task sourcesJar(type: Jar) {
-        classifier = 'sources'
-        from android.sourceSets.main.java.srcDirs
-    }
+    if (project.hasProperty("android")) { // Android libraries
+        task sourcesJar(type: Jar) {
+            classifier = 'sources'
+            from android.sourceSets.main.java.srcDirs
+        }
 
-    task javadoc(type: Javadoc) {
-        source = android.sourceSets.main.java.srcDirs
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    }
+        task javadoc(type: Javadoc) {
+            source = android.sourceSets.main.java.srcDirs
+            classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        }
 
 //    apply plugin: "org.jetbrains.dokka-android"
 //    task dokkaJavadoc(type: dokka.getClass()) {
@@ -23,11 +24,11 @@ if (project.hasProperty("android")) { // Android libraries
 //        classifier = 'javadoc'
 //        from "$buildDir/javadoc"
 //    }
-} else { // Java libraries
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
+    } else { // Java libraries
+        task sourcesJar(type: Jar, dependsOn: classes) {
+            classifier = 'sources'
+            from sourceSets.main.allSource
+        }
 
 //    apply plugin: "org.jetbrains.dokka"
 //    task dokkaJavadoc(type: dokka.getClass()) {
@@ -39,42 +40,43 @@ if (project.hasProperty("android")) { // Android libraries
 //        classifier = 'javadoc'
 //        from "$buildDir/javadoc"
 //    }
-}
+    }
 
-bintrayUpload.dependsOn assemble
-bintrayUpload.dependsOn sourcesJar
+    bintrayUpload.dependsOn assemble
+    bintrayUpload.dependsOn sourcesJar
 //bintrayUpload.dependsOn javadocJar
 
-artifacts {
-    //archives javadocJar
-    archives sourcesJar
-}
+    artifacts {
+        //archives javadocJar
+        archives sourcesJar
+    }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+    bintray {
+        user = properties.getProperty("bintray.user")
+        key = properties.getProperty("bintray.apikey")
 
-    configurations = ['archives']
-    pkg {
-        repo = bintrayRepo
-        name = bintrayName
-        desc = libraryDescription
-        userOrg = bintrayOrg
-
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publish = true
-        publicDownloadNumbers = true
-        version {
+        configurations = ['archives']
+        pkg {
+            repo = bintrayRepo
+            name = bintrayName
             desc = libraryDescription
-            gpg {
-                sign = false //Determines whether to GPG sign the files. The default is false
-                passphrase = properties.getProperty("bintray.gpg.password")
-                //Optional. The passphrase for GPG signing'
+            userOrg = bintrayOrg
+
+            websiteUrl = siteUrl
+            vcsUrl = gitUrl
+            licenses = allLicenses
+            publish = true
+            publicDownloadNumbers = true
+            version {
+                desc = libraryDescription
+                gpg {
+                    sign = false //Determines whether to GPG sign the files. The default is false
+                    passphrase = properties.getProperty("bintray.gpg.password")
+                    //Optional. The passphrase for GPG signing'
+                }
             }
         }
     }
