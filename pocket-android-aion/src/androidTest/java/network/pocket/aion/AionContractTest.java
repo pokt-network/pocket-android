@@ -33,14 +33,6 @@ public class AionContractTest {
     String testAccountPK = "0x1593800fe636f6fe996a0148c4ee1ecd6ff55a47b351a40f2da9d68815e1c6c958a09d74260842d51592f7be77e02171e4aea295078de50e5695835eee743932";
 
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("network.pokt.aion.test", appContext.getPackageName());
-    }
-
-    @Test
     public void testConstantFunctionCall() {
         SemaphoreUtil.executeSemaphoreCallback(new SemaphoreUtil.SemaphoreCallback() {
             @Override

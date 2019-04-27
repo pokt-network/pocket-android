@@ -35,14 +35,6 @@ public class EthContractTest {
     String testAccountPK = "d97131a82ffa10142a277c49cb847c041f15eaff0fd0594d3152ca1ded2e1cb7";
 
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("network.pokt.eth.test", appContext.getPackageName());
-    }
-
-    @Test
     public void testConstantFunctionCall() {
         SemaphoreUtil.executeSemaphoreCallback(new SemaphoreUtil.SemaphoreCallback() {
             @Override
