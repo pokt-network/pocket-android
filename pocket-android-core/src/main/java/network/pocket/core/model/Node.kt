@@ -1,5 +1,13 @@
 package network.pocket.core.model
 
+/**
+ * A Model Class that represents a Node
+ *
+ * @property network the blockchain network name, ie: ETH, AION.
+ * @property netId the netId of the blockchain.
+ * @property ipPort Ip url for this Node.
+ * @constructor Creates a Node Object.
+ */
 class Node(network: String, netId: String, ipPort: String) {
 
     var network = network
