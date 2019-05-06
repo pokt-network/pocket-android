@@ -12,6 +12,17 @@ import network.pocket.core.errors.WalletPersistenceError
 typealias WalletSaveListener = (walletPersistenceError: WalletPersistenceError?) -> Unit
 typealias WalletRetrieveListener = (walletPersistenceError: WalletPersistenceError?, wallet: Wallet?) -> Unit
 
+/**
+ * A Model Class that represents a Wallet
+ *
+ * Used to represent a Crypto Wallet.
+ *
+ * @property privateKey the private key for this wallet.
+ * @property address the wallet address.
+ * @property network the blockchain network name, ie: ETH, AION.
+ * @property netID the netid of the Blockchain.
+ * @constructor Creates a Wallet Object.
+ */
 open class Wallet(var privateKey: String, var address: String, var network: String, var netID: String) : JSONObject() {
     private val crypto = ECSymmetric()
 
@@ -38,6 +49,13 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
             return Hawk.contains(Wallet.recordKey(network, netID, address))
         }
 
+        /**
+         * Retrieves all record keys for this Wallet.
+         *
+         * @throws WalletPersistenceError if unable to retrieve record keys.
+         * @property context Android context.
+         * @return a list of Record Keys.
+         */
         @Throws(WalletPersistenceError::class)
         fun getWalletsRecordKeys(context: Context): List<String> {
             Hawk.init(context).build()
@@ -56,6 +74,20 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
             return recordKeysList
         }
 
+        /**
+         * Decrypts a Wallet.
+         *
+         * @see Wallet
+         * @see WalletRetrieveListener
+         *
+         * @throws WalletPersistenceError if there was an error decrypting the Wallet.
+         * @property network the blockchain network name, ie: ETH, AION.
+         * @property netID the netId of the blockchain.
+         * @property address the wallet address.
+         * @property passphrase the passphrase for this wallet.
+         * @property context context Android context.
+         * @property listener the listener for the decrypted wallet result.
+         */
         @Throws(WalletPersistenceError::class)
         fun retrieve(network: String, netID: String, address: String, passphrase: String, context: Context, listener: WalletRetrieveListener) {
             if (!Wallet.isSaved(network, netID, address, context)) {
@@ -109,6 +141,15 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
         return Wallet.recordKey(this.network, this.netID, this.address)
     }
 
+    /**
+     * Encrypt and Store a Wallet locally.
+     *
+     *
+     * @throws WalletPersistenceError if there was an error encrypting the Wallet.
+     * @property passphrase the passphrase for this wallet.
+     * @property context context Android context.
+     * @property listener the listener for the encrypted wallet result.
+     */
     // Persistence interfaces
     @Throws(WalletPersistenceError::class)
     fun save(passphrase: String, context: Context, listener: WalletSaveListener) {
@@ -145,6 +186,12 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
         })
     }
 
+    /**
+     * Delete a Wallet previously encrypted
+     *
+     * @throws WalletPersistenceError if there was an error storing the Wallet.
+     * @property context context Android context.
+     */
     @Throws(WalletPersistenceError::class)
     fun delete(context: Context): Boolean {
         if (!this.isSaved(context)) {
