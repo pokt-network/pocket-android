@@ -3,11 +3,26 @@ package network.pocket.core.model
 import org.json.JSONArray
 import org.json.JSONObject
 
-
+/**
+ * A Model Class that wraps the user Configuration
+ *
+ * @see Configuration
+ *
+ * @property configuration the configuration to be used
+ * @constructor Creates a Dispatch Object.
+ */
 class Dispatch(var configuration:Configuration){
 
     var nodes: List<Node> = ArrayList()
 
+    /**
+     * Creates an ArrayList of Node elements
+     *
+     * @see Node
+     *
+     * @property jsonObject the jsonObject from the jsonArray response
+     * @return a list of Node
+     */
     private fun createNodesArray(jsonObject: JSONObject): ArrayList<Node> {
         var nodes = arrayListOf<Node>()
 
@@ -25,6 +40,15 @@ class Dispatch(var configuration:Configuration){
         return nodes
     }
 
+    /**
+     * Parse the response from the Dispatch service
+     *
+     * @see jsonArray
+     * @see Node
+     *
+     * @property jsonObject the response from the Dispatcher
+     * @return a list of Node
+     */
     fun parseDispatchResponse(jsonArray: JSONArray): ArrayList<Node> {
         var nodes = arrayListOf<Node>()
 
