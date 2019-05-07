@@ -3,9 +3,9 @@ package network.pocket.core.model
 import network.pocket.core.util.Utils
 
 /**
- * A Model Class that represents a Relay
+ * A Model Class that represents a Relay.
  *
- * @property blockchain the blockchain network name, ie: ETH, AION
+ * @property blockchain the blockchain network name, ie: ETH, AION.
  * @property netId the netId of the blockchain.
  * @property devId the id used to interact with Pocket Api.
  * @property ipPort Ip url for this Node.
