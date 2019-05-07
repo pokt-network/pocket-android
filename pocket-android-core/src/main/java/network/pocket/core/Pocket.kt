@@ -6,6 +6,21 @@ import network.pocket.core.net.PocketAPI
 import org.json.JSONArray
 import org.json.JSONObject
 
+/**
+ * Abstract Class used to interact with PocketApi.
+ *
+ * Extends this class to create your own custom plugins.
+ *
+ * @see PocketAPI
+ * @see Dispatch
+ *
+ * @property dispatch dispatch with the current configuration.
+ * @property devID the id used to interact with Pocket Api.
+ * @property netIds @ArrayList of netid's of the Blockchain.
+ * @property maxNodes maximum number of nodes to be used, default 5.
+ * @property requestTimeOut timeout in ms, for every request made, default 1000 ms.
+ *
+ */
 abstract class Pocket {
 
     private val dispatch: Dispatch
@@ -27,6 +42,15 @@ abstract class Pocket {
         this.requestTimeOut = requestTimeOut
     }
 
+    /**
+     * Sends relay to a Pocket node.
+     *
+     * @see Relay
+     *
+     * @property relay relay to be sent to the node.
+     * @property callback listener for the send relay operation.
+     *
+     */
     // Public interfaces
     fun send(relay: Relay, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
         if (!relay.isValid()) {
@@ -53,10 +77,30 @@ abstract class Pocket {
         send(Relay(blockchain, netID, this.dispatch.configuration.devId, data), callback)
     }
 
+    /**
+     * Adds a new Blockchain to the dispatch configuration.
+     *
+     * @see Dispatch
+     * @see Configuration
+     *
+     * @property network the blockchain network name, ie: ETH, AION..
+     * @property netID the netid of the Blockchain.
+     *
+     */
     fun addBlockchain(network: String, netID: String) {
         this.dispatch.configuration.blockChains.add(Blockchain(network, netID))
     }
 
+    /**
+     * Randomly selects a valid node
+     *
+     * @see Node
+     *
+     * @property nodes List of nodes
+     *
+     * @return a valid random Node
+     *
+     */
     // Private interface
     private fun getRandomNode(nodes: List<Node>?): Node? {
         return when(nodes) {
@@ -71,6 +115,19 @@ abstract class Pocket {
         }
     }
 
+    /**
+     * Gets a random node.
+     *
+     * If the dispatch node list is empty, a new list of nodes will be obtained from Pocket backend.
+     *
+     * @see Dispatch
+     * @see Node
+     *
+     * @property network the blockchain network name, ie: ETH, AION.
+     * @property netID the netid of the Blockchain.
+     * @property retrieveNodes Whether to retrieve new nodes.
+     *
+     */
     private fun getNode(network: String, netID: String, retrieveNodes: Boolean = false, callback: (error: PocketError?, node: Node?) -> Unit) {
         var nodes = arrayListOf<Node>()
         this.dispatch.nodes.forEach { node ->
@@ -97,7 +154,7 @@ abstract class Pocket {
             callback.invoke(null, this.getRandomNode(nodes))
         }
     }
-
+    
     private fun retrieveNodes(callback: (error: PocketError?, nodes: List<Node>?) -> Unit) {
         PocketAPI.retrieveNodes(dispatch.configuration) { error, nodesJSON ->
             var pocketError = error

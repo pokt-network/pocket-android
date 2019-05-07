@@ -14,6 +14,10 @@ import org.json.JSONTokener
 import java.io.IOException
 import java.lang.Exception
 
+/**
+ * Class that interacts with Pocket backend.
+ *
+ */
 internal class PocketAPI {
 
     companion object {
@@ -50,6 +54,16 @@ internal class PocketAPI {
         private var gson = Gson().newBuilder().create()
         private var client = OkHttpClient().newBuilder().followRedirects(false).followSslRedirects(false).build()
 
+        /**
+         * Sends a relay to a specific node.
+         *
+         * @see Relay
+         * @see Node
+         *
+         * @property relay relay to be sent to the node.
+         * @property node specific node to be used.
+         * @property relayCallback callback listener for the send relay operation.
+         */
         fun send(relay: Relay, node: Node, relayCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
             val url = node.ipPort.plus(Constants.RELAY_PATH)
             val json = gson.toJson(relay)
@@ -67,6 +81,14 @@ internal class PocketAPI {
             })
         }
 
+        /**
+         * Sends a report to Pocket.
+         *
+         * @see Report
+         *
+         * @property report report to be sent to Pocket.
+         * @property reportCallback callback listener for the send report operation.
+         */
         fun send(report: Report, reportCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
             val url = BuildConfig.DISPATCH_NODE_URL.plus(Constants.REPORT_PATH)
             val json = gson.toJson(report)
@@ -79,6 +101,15 @@ internal class PocketAPI {
             client.newCall(request).enqueue(PocketApiCallback(reportCallback))
         }
 
+        /**
+         * Retrieves live nodes per the configuration.
+         *
+         * @see Configuration
+         * @see Node
+         *
+         * @property configuration the configuration to be used.
+         * @property callback callback listener for the retrieve nodes operation.
+         */
         fun retrieveNodes(configuration: Configuration, callback: (error: PocketError?, nodesJSON: JSONArray?) -> Unit) {
             val url = BuildConfig.DISPATCH_NODE_URL.plus(Constants.DISPATCH_PATH)
             val json = gson.toJson(configuration)

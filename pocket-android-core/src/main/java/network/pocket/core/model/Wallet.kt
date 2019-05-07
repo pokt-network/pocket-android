@@ -13,7 +13,7 @@ typealias WalletSaveListener = (walletPersistenceError: WalletPersistenceError?)
 typealias WalletRetrieveListener = (walletPersistenceError: WalletPersistenceError?, wallet: Wallet?) -> Unit
 
 /**
- * A Model Class that represents a Wallet
+ * A Model Class that represents a Wallet.
  *
  * Used to represent a Crypto Wallet.
  *

@@ -3,7 +3,7 @@ package network.pocket.core.model
 import network.pocket.core.util.Utils
 
 /**
- * A Model Class that represents a Report
+ * A Model Class that represents a Report.
  *
  * Used to report a fallen node.
  *
