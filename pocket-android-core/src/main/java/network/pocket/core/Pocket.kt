@@ -154,7 +154,7 @@ abstract class Pocket {
             callback.invoke(null, this.getRandomNode(nodes))
         }
     }
-    
+
     private fun retrieveNodes(callback: (error: PocketError?, nodes: List<Node>?) -> Unit) {
         PocketAPI.retrieveNodes(dispatch.configuration) { error, nodesJSON ->
             var pocketError = error
