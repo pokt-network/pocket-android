@@ -4,11 +4,11 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 /**
- * A Model Class that wraps the user Configuration
+ * A Model Class that wraps the user Configuration.
  *
  * @see Configuration
  *
- * @property configuration the configuration to be used
+ * @property configuration the configuration to be used.
  * @constructor Creates a Dispatch Object.
  */
 class Dispatch(var configuration:Configuration){
