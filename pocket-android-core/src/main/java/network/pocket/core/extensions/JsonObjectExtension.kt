@@ -2,6 +2,11 @@ package network.pocket.core.extensions
 
 import org.json.JSONObject
 
+/**
+ * JsonObject extension to handle internal json parsing.
+ *
+ */
+
 fun JSONObject.hasError(): Boolean {
     return this.has("error")
 }

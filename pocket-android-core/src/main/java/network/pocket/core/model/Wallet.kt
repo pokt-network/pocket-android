@@ -21,6 +21,7 @@ typealias WalletRetrieveListener = (walletPersistenceError: WalletPersistenceErr
  * @property address the wallet address.
  * @property network the blockchain network name, ie: ETH, AION.
  * @property netID the netid of the Blockchain.
+ *
  * @constructor Creates a Wallet Object.
  */
 open class Wallet(var privateKey: String, var address: String, var network: String, var netID: String) : JSONObject() {
@@ -53,7 +54,8 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
          * Retrieves all record keys for this Wallet.
          *
          * @throws WalletPersistenceError if unable to retrieve record keys.
-         * @property context Android context.
+         * @param context Android context.
+         *
          * @return a list of Record Keys.
          */
         @Throws(WalletPersistenceError::class)
@@ -81,12 +83,13 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
          * @see WalletRetrieveListener
          *
          * @throws WalletPersistenceError if there was an error decrypting the Wallet.
-         * @property network the blockchain network name, ie: ETH, AION.
-         * @property netID the netId of the blockchain.
-         * @property address the wallet address.
-         * @property passphrase the passphrase for this wallet.
-         * @property context context Android context.
-         * @property listener the listener for the decrypted wallet result.
+         *
+         * @param network the blockchain network name, ie: ETH, AION.
+         * @param netID the netId of the blockchain.
+         * @param address the wallet address.
+         * @param passphrase the passphrase for this wallet.
+         * @param context context Android context.
+         * @param listener the listener for the decrypted wallet result.
          */
         @Throws(WalletPersistenceError::class)
         fun retrieve(network: String, netID: String, address: String, passphrase: String, context: Context, listener: WalletRetrieveListener) {
@@ -144,13 +147,14 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
     /**
      * Encrypt and Store a Wallet locally.
      *
+     * Persistence interfaces
      *
      * @throws WalletPersistenceError if there was an error encrypting the Wallet.
-     * @property passphrase the passphrase for this wallet.
-     * @property context context Android context.
-     * @property listener the listener for the encrypted wallet result.
+     * @param passphrase the passphrase for this wallet.
+     * @param context context Android context.
+     * @param listener the listener for the encrypted wallet result.
      */
-    // Persistence interfaces
+
     @Throws(WalletPersistenceError::class)
     fun save(passphrase: String, context: Context, listener: WalletSaveListener) {
         if (this.isSaved(context)) {
@@ -190,7 +194,10 @@ open class Wallet(var privateKey: String, var address: String, var network: Stri
      * Delete a Wallet previously encrypted
      *
      * @throws WalletPersistenceError if there was an error storing the Wallet.
-     * @property context context Android context.
+     *
+     * @param context context Android context.
+     *
+     * @return whether the record was correctly deleted.
      */
     @Throws(WalletPersistenceError::class)
     fun delete(context: Context): Boolean {

@@ -1,9 +1,12 @@
 package network.pocket.core.errors
 
 /**
- * A custom @see Error to encapsulate issues while storing or retrieving wallet info
+ * A custom error to encapsulate issues while storing or retrieving wallet info.
  *
+ * @see Error
  *
- * @param errorMsg the error message to display
+ * @param errorMsg the error message to display.
+ *
+ * @constructor constructs a WalletPersistenceError.
  */
 class WalletPersistenceError(errorMsg: String) : Error(errorMsg)

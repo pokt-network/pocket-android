@@ -6,6 +6,7 @@ package network.pocket.core.model
  *
  * @property name the name of the Blockchain.
  * @property netId the netid of the Blockchain.
+ *
  * @constructor Creates a Blockchain Object.
  */
 class Blockchain(var name: String, var netId: String)
