@@ -1,9 +1,12 @@
 package network.pocket.core.errors
 
 /**
- * A custom @see Error to encapsulate uncommon behaviour using the Pocket API
+ * A custom error to encapsulate uncommon behaviour using the Pocket API.
  *
+ * @see Error
  *
- * @param errorMsg the error message to display
+ * @param errorMsg the error message to display.
+ *
+ * @constructor constructs a PocketError.
  */
 class PocketError(errorMsg: String) : Error(errorMsg)

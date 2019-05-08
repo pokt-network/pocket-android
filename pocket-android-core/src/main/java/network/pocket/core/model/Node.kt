@@ -6,6 +6,7 @@ package network.pocket.core.model
  * @property network the blockchain network name, ie: ETH, AION.
  * @property netId the netId of the blockchain.
  * @property ipPort Ip url for this Node.
+ *
  * @constructor Creates a Node Object.
  */
 class Node(network: String, netId: String, ipPort: String) {
@@ -63,6 +64,14 @@ class Node(network: String, netId: String, ipPort: String) {
         }
     }
 
+    /**
+     * Compares if 2 nodes are equals
+     *
+     * @param netId the netId of the blockchain.
+     * @param network the blockchain network name, ie: ETH, AION.
+     *
+     * @return whether it's the same Node
+     */
     fun isEqual(netId: String, network: String): Boolean {
         if (this.netId == netId && this.network == network) {
             return true

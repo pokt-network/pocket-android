@@ -9,6 +9,8 @@ import org.json.JSONObject
  * @see Configuration
  *
  * @property configuration the configuration to be used.
+ * @property nodes list of nodes to be used.
+ *
  * @constructor Creates a Dispatch Object.
  */
 class Dispatch(var configuration:Configuration){
@@ -20,7 +22,8 @@ class Dispatch(var configuration:Configuration){
      *
      * @see Node
      *
-     * @property jsonObject the jsonObject from the jsonArray response
+     * @param jsonObject the jsonObject from the jsonArray response
+     *
      * @return a list of Node
      */
     private fun createNodesArray(jsonObject: JSONObject): ArrayList<Node> {
@@ -46,7 +49,8 @@ class Dispatch(var configuration:Configuration){
      * @see jsonArray
      * @see Node
      *
-     * @property jsonObject the response from the Dispatcher
+     * @param jsonArray the response from the Dispatcher
+     *
      * @return a list of Node
      */
     fun parseDispatchResponse(jsonArray: JSONArray): ArrayList<Node> {

@@ -1,5 +1,9 @@
 package network.pocket.core.util
 
+/**
+ * Pocket Core Utility class
+ *
+ */
 class Utils {
 
     companion object {
@@ -7,7 +11,8 @@ class Utils {
          * Method used to pre-check for null or empty values.
          *
          * @throws Exception if params are invalid.
-         * @property values the values to be pre-checked
+         * @param values the values to be pre-checked
+         *
          * @return true if values are valid
          */
         @Throws(Exception::class)
