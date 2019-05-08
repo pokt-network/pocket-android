@@ -47,8 +47,8 @@ abstract class Pocket {
      *
      * @see Relay
      *
-     * @property relay relay to be sent to the node.
-     * @property callback listener for the send relay operation.
+     * @param relay relay to be sent to the node.
+     * @param callback listener for the send relay operation.
      *
      */
     // Public interfaces
@@ -83,8 +83,8 @@ abstract class Pocket {
      * @see Dispatch
      * @see Configuration
      *
-     * @property network the blockchain network name, ie: ETH, AION..
-     * @property netID the netid of the Blockchain.
+     * @param network the blockchain network name, ie: ETH, AION..
+     * @param netID the netid of the Blockchain.
      *
      */
     fun addBlockchain(network: String, netID: String) {
@@ -96,7 +96,7 @@ abstract class Pocket {
      *
      * @see Node
      *
-     * @property nodes List of nodes
+     * @param nodes List of nodes
      *
      * @return a valid random Node
      *
@@ -123,9 +123,9 @@ abstract class Pocket {
      * @see Dispatch
      * @see Node
      *
-     * @property network the blockchain network name, ie: ETH, AION.
-     * @property netID the netid of the Blockchain.
-     * @property retrieveNodes Whether to retrieve new nodes.
+     * @param network the blockchain network name, ie: ETH, AION.
+     * @param netID the netid of the Blockchain.
+     * @param retrieveNodes Whether to retrieve new nodes.
      *
      */
     private fun getNode(network: String, netID: String, retrieveNodes: Boolean = false, callback: (error: PocketError?, node: Node?) -> Unit) {
@@ -155,6 +155,15 @@ abstract class Pocket {
         }
     }
 
+    /**
+     * Parses the list of service nodes from Pocket dispatch.
+     *
+     *
+     * @see Node
+     *
+     * @param callback listener for the parse operation.
+     *
+     */
     private fun retrieveNodes(callback: (error: PocketError?, nodes: List<Node>?) -> Unit) {
         PocketAPI.retrieveNodes(dispatch.configuration) { error, nodesJSON ->
             var pocketError = error

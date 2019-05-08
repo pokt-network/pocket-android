@@ -9,6 +9,7 @@ package network.pocket.core.model
  * @property blockChains the list of blockchains to be used.
  * @property maxNodes maximum number of nodes to be used, default 5.
  * @property requestTimeOut timeout in ms, for every request made, default 1000 ms.
+ *
  * @constructor Creates a Configuration Object.
  */
 class Configuration(var devId: String, var blockChains: ArrayList<Blockchain>, var maxNodes: Int = 5, var requestTimeOut: Int = 1000) {}

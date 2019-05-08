@@ -60,9 +60,9 @@ internal class PocketAPI {
          * @see Relay
          * @see Node
          *
-         * @property relay relay to be sent to the node.
-         * @property node specific node to be used.
-         * @property relayCallback callback listener for the send relay operation.
+         * @param relay relay to be sent to the node.
+         * @param node specific node to be used.
+         * @param relayCallback callback listener for the send relay operation.
          */
         fun send(relay: Relay, node: Node, relayCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
             val url = node.ipPort.plus(Constants.RELAY_PATH)
@@ -86,8 +86,8 @@ internal class PocketAPI {
          *
          * @see Report
          *
-         * @property report report to be sent to Pocket.
-         * @property reportCallback callback listener for the send report operation.
+         * @param report report to be sent to Pocket.
+         * @param reportCallback callback listener for the send report operation.
          */
         fun send(report: Report, reportCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
             val url = BuildConfig.DISPATCH_NODE_URL.plus(Constants.REPORT_PATH)
@@ -107,8 +107,8 @@ internal class PocketAPI {
          * @see Configuration
          * @see Node
          *
-         * @property configuration the configuration to be used.
-         * @property callback callback listener for the retrieve nodes operation.
+         * @param configuration the configuration to be used.
+         * @param callback callback listener for the retrieve nodes operation.
          */
         fun retrieveNodes(configuration: Configuration, callback: (error: PocketError?, nodesJSON: JSONArray?) -> Unit) {
             val url = BuildConfig.DISPATCH_NODE_URL.plus(Constants.DISPATCH_PATH)
