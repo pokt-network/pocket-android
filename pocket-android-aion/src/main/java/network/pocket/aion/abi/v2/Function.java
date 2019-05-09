@@ -7,6 +7,9 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+/**
+ * Class used to Encode/Decode Aion operations.
+ */
 public class Function {
 
     private boolean constant;

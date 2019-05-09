@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * Utility class for Raw Files.
+ */
 public class RawFileUtil {
 
     public static String readRawTextFile(Context context, int resId) {

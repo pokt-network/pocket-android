@@ -4,8 +4,21 @@ import network.pocket.core.model.Wallet;
 import org.jetbrains.annotations.NotNull;
 import org.liquidplayer.javascript.JSObject;
 
+/**
+ * Utility Class.
+ */
 public class OperationUtil {
 
+    /**
+     *
+     * @param walletObj jsonObject containing the Wallet information.
+     * @param network Wallet Network.
+     * @param subnetwork Wallet Subnetwork.
+     *
+     * @see Wallet
+     *
+     * @return the parsed Wallet
+     */
     public static Wallet parseWalletObj(JSObject walletObj, @NotNull String network, @NotNull String subnetwork) {
         Wallet result;
 

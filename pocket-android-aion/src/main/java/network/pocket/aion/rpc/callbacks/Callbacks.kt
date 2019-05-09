@@ -6,6 +6,11 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.math.BigInteger
 
+/**
+ * Generic Callbacks used by EthRpc
+ *
+ * @see network.pocket.aion.rpc.EthRpc
+ */
 typealias StringCallback = (pocketError: PocketError?, result: String?) -> Unit
 typealias BigIntegerCallback = (pocketError: PocketError?, result: BigInteger?) -> Unit
 typealias BooleanCallback = (pocketError: PocketError?, result: Boolean?) -> Unit
