@@ -10,15 +10,46 @@ import org.liquidplayer.javascript.JSException;
 import org.liquidplayer.javascript.JSFunction;
 import org.liquidplayer.javascript.JSObject;
 
+/**
+ * Create Transaction Operation.
+ *
+ * @see BaseOperation
+ *
+ */
 public class CreateTransactionOperation extends BaseOperation {
 
+    /**
+     * Raw transaction operation.
+     */
     private String rawTransaction;
+    /**
+     * Wallet used by transaction.
+     * @see Wallet
+     */
     private Wallet wallet;
+    /**
+     * Transaction Nonce.
+     */
     private String nonce;
+    /**
+     * Destination address.
+     */
     private String to;
+    /**
+     * Amount to be sent.
+     */
     private String value;
+    /**
+     * Transaction data.
+     */
     private String data;
+    /**
+     * Integer of the gas provided for the transaction execution. It will return unused gas.
+     */
     private String nrg;
+    /**
+     * Returns the current price per gas in wei.
+     */
     private String nrgPrice;
 
     CreateTransactionOperation(Context context) {
@@ -36,6 +67,11 @@ public class CreateTransactionOperation extends BaseOperation {
         this.nrgPrice = nrgPrice;
     }
 
+    /**
+     * Runs the operation to create a transaction.
+     *
+     * @param jsContext LiquidPlayer context.
+     */
     @Override
     void executeOperation(JSContext jsContext) {
         // Parse input parameters for transaction signature
@@ -51,6 +87,13 @@ public class CreateTransactionOperation extends BaseOperation {
         promise.property("then").toFunction().call(promise, this.getTransactionSignatureCallback(jsContext));
     }
 
+    /**
+     * Gets the callback for this transaction.
+     *
+     * @param jsContext LiquidPlayer context.
+     *
+     * @return JSFunction
+     */
     private JSFunction getTransactionSignatureCallback(JSContext jsContext) {
         return new JSFunction(jsContext, "then") {
             public void then(JSObject result) {
@@ -65,12 +108,21 @@ public class CreateTransactionOperation extends BaseOperation {
         };
     }
 
+    /**
+     * Registers an exception to be thrown.
+     *
+     * @param exception error to be shown.
+     */
     @Override
     public void handle(JSException exception) {
         super.handle(exception);
         this.rawTransaction = null;
     }
 
+    /**
+     *
+     * @return rawTransaction String
+     */
     public String getRawTransaction() {
         return this.rawTransaction;
     }

@@ -5,6 +5,16 @@ import network.pocket.aion.network.AionNetwork
 import network.pocket.core.Pocket
 import network.pocket.core.errors.PocketError
 
+/**
+ * Pocket Aion Plugging
+ *
+ * @property context App context.
+ * @property devID the id used to interact with Pocket Api.
+ * @property netIds @ArrayList of netid's of the Blockchain.
+ * @property maxNodes maximum number of nodes to be used, default 5.
+ * @property requestTimeOut timeout in ms, for every request made, default 1000 ms.
+ * @property defaultNetID Network name.
+ */
 class PocketAion @Throws constructor(
     val context: Context,
     devId: String,

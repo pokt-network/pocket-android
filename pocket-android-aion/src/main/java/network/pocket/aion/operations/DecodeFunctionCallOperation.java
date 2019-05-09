@@ -11,10 +11,26 @@ import org.liquidplayer.javascript.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Decode Function Call Operation.
+ *
+ * @see BaseOperation
+ *
+ */
 public class DecodeFunctionCallOperation extends BaseOperation {
 
+    /**
+     * Encoded Response.
+     */
     private String encodedResponse;
+    /**
+     * Function to decode.
+     * @see Function
+     */
     private Function function;
+    /**
+     * Decoded response.
+     */
     private Object[] decodedResponse = null;
 
     DecodeFunctionCallOperation(Context context) {
@@ -27,6 +43,11 @@ public class DecodeFunctionCallOperation extends BaseOperation {
         this.encodedResponse = encodedResponse;
     }
 
+    /**
+     * Runs the operation to decode a Function.
+     *
+     * @param jsContext LiquidPlayer context.
+     */
     @Override
     void executeOperation(JSContext jsContext) {
         // Add biginteger polyfill
@@ -54,6 +75,11 @@ public class DecodeFunctionCallOperation extends BaseOperation {
         return decodedResponse;
     }
 
+    /**
+     * Registers an exception to be thrown.
+     *
+     * @param exception error to be shown.
+     */
     @Override
     public void handle(JSException exception) {
         super.handle(exception);
@@ -74,7 +100,13 @@ public class DecodeFunctionCallOperation extends BaseOperation {
         return result.toArray();
     }
 
-    // This utility is mainly used for decoding smart contract function return values
+    /**
+     * This utility is mainly used for decoding smart contract function return values
+     *
+     * @param objParam
+     *
+     * @return values
+     */
     private static Object jsValueToObject(JSValue objParam) {
         Object result;
 

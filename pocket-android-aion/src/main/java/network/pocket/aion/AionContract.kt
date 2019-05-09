@@ -15,7 +15,9 @@ import network.pocket.aion.rpc.callbacks.StringCallback
 import network.pocket.core.errors.PocketError
 import network.pocket.core.model.Wallet
 
-
+/**
+ * Aion contract class
+ */
 
 class AionContract
 @Throws(JSONException::class)
@@ -30,6 +32,17 @@ constructor(
         this.parseContractFunctions()
     }
 
+    /**
+     * Executes an Aion function.
+     *
+     * @param functionName function name.
+     * @param functionParams params to be sent.
+     * @param fromAddress The address the transaction is sent from.
+     * @param nrg Integer of the gas provided for the transaction execution.
+     * @param nrgPrice Integer of the gasPrice used for each paid gas.
+     * @param value Integer of the value sent with this transaction.
+     * @param callback listener for execute constant function.
+     */
     @Throws(AionContractException::class)
     fun executeConstantFunction(
         functionName: String,
@@ -78,6 +91,17 @@ constructor(
         }
     }
 
+    /**
+     * Executes an Aion function.
+     *
+     * @param functionName function name.
+     * @param functionParams params to be sent.
+     * @param nonce Integer of a nonce. This allows to overwrite your own pending transactions that use the same nonce.
+     * @param nrg Integer of the gas provided for the transaction execution.
+     * @param nrgPrice Integer of the gasPrice used for each paid gas.
+     * @param value Integer of the value sent with this transaction.
+     * @param callback listener for execute constant function.
+     */
     @Throws(AionContractException::class)
     fun executeFunction(
         functionName: String,

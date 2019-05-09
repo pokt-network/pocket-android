@@ -9,11 +9,30 @@ import org.liquidplayer.javascript.JSContext;
 import org.liquidplayer.javascript.JSException;
 import org.liquidplayer.javascript.JSObject;
 
+/**
+ * Import Wallet Operation.
+ *
+ * @see BaseOperation
+ *
+ */
 public class ImportWalletOperation extends BaseOperation {
 
+    /**
+     * Wallet private key.
+     */
     private String privateKey;
+    /**
+     * Wallet Network.
+     */
     private String network;
+    /**
+     * Wallet Subnetwork.
+     */
     private String subnetwork;
+    /**
+     * Wallet to be imported.
+     * @see Wallet
+     */
     private Wallet wallet;
 
     ImportWalletOperation(Context context) {
@@ -31,6 +50,11 @@ public class ImportWalletOperation extends BaseOperation {
         return this.wallet;
     }
 
+    /**
+     * Runs the operation to import a Wallet.
+     *
+     * @param jsContext LiquidPlayer context.
+     */
     @Override
     void executeOperation(JSContext jsContext) {
         // Run the script to create the wallet in JS
@@ -40,6 +64,11 @@ public class ImportWalletOperation extends BaseOperation {
         this.wallet = OperationUtil.parseWalletObj(walletObj, this.network, this.subnetwork);
     }
 
+    /**
+     * Registers an exception to be thrown.
+     *
+     * @param exception error to be shown.
+     */
     @Override
     public void handle(JSException exception) {
         super.handle(exception);
