@@ -1,5 +1,9 @@
 package network.pocket.aion.util;
 
+/**
+ * Utility class for Hex parsing.
+ *
+ */
 public class HexStringUtil {
 
     private static final String ZERO_X = "0x";

@@ -10,6 +10,9 @@ import org.liquidplayer.node.Process.EventListener;
 
 import java.util.concurrent.Semaphore;
 
+/**
+ * Abstract class that represents an Operation
+ */
 abstract class BaseOperation implements JSContext.IJSExceptionHandler, EventListener {
 
     Context context;
@@ -22,11 +25,22 @@ abstract class BaseOperation implements JSContext.IJSExceptionHandler, EventList
         this.context = context;
     }
 
+    /**
+     * Gets the error message.
+     *
+     * @return error message
+     *
+     */
     public String getErrorMsg() {
         return this.errorMsg;
     }
 
-    // Creates the process
+    /**
+     * Starts the process.
+     *
+     * @return whether the process was started correctly or was already running.
+     *
+     */
     public boolean startProcess() {
         if (process != null) {
             this.errorMsg = "Operation already executed";
@@ -42,6 +56,12 @@ abstract class BaseOperation implements JSContext.IJSExceptionHandler, EventList
         return true;
     }
 
+    /**
+     * Executed when the process starts.
+     *
+     * @param process process to be executed.
+     * @param jsContext
+     */
     @Override
     public void onProcessStart(Process process, JSContext jsContext) {
         try {
@@ -57,17 +77,35 @@ abstract class BaseOperation implements JSContext.IJSExceptionHandler, EventList
         }
     }
 
+    /**
+     * Executed when the process finish execution.
+     *
+     * @param process process that was executed.
+     * @param exitCode
+     */
     @Override
     public void onProcessExit(Process process, int exitCode) {
         this.semaphore.release();
     }
 
+    /**
+     * Executed when the process finish execution.
+     *
+     * @param process process that failed.
+     * @param error
+     */
     @Override
     public void onProcessFailed(Process process, Exception error) {
         this.semaphore.release();
         this.errorMsg = error.getMessage();
     }
 
+    /**
+     * Executed when the will finish execution.
+     *
+     * @param process process that failed.
+     * @param exitCode
+     */
     @Override
     public void onProcessAboutToExit(Process process, int exitCode) {
         this.semaphore.release();
@@ -78,10 +116,17 @@ abstract class BaseOperation implements JSContext.IJSExceptionHandler, EventList
         this.errorMsg = exception.getMessage();
     }
 
-    // Gets called by onProcessStart to run custom operation code
+    /**
+     * Executed by onProcessStart to run custom operation code
+     *
+     */
     abstract void executeOperation(JSContext jsContext);
 
-    // Gets the unique id of this operation
+    /**
+     * Gets the unique id of this operation
+     *
+     * @return the id of the Operation.
+     */
     private String getOperationID() {
         int randomId = new Double(Math.random() * ((Integer.MAX_VALUE - 0) + 1) + 0).intValue();
         return String.format("%s-%d", this.getClass().getName(), randomId);

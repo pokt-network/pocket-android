@@ -13,10 +13,27 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Encode Function Call Operation.
+ *
+ * @see BaseOperation
+ *
+ */
 public class EncodeFunctionCallOperation extends BaseOperation {
 
+    /**
+     * Encoded Function call.
+     */
     private String encodedFunctionCall;
+    /**
+     * Function to encode.
+     * @see Function
+     */
     private Function function;
+    /**
+     * Params to encode.
+     * @see Function
+     */
     private List<Object> params;
 
     EncodeFunctionCallOperation(Context context) {
@@ -29,6 +46,11 @@ public class EncodeFunctionCallOperation extends BaseOperation {
         this.params = params;
     }
 
+    /**
+     * Runs the operation to encode a Function.
+     *
+     * @param jsContext LiquidPlayer context.
+     */
     @Override
     void executeOperation(JSContext jsContext) {
         // Add biginteger polyfill
@@ -52,6 +74,11 @@ public class EncodeFunctionCallOperation extends BaseOperation {
         return encodedFunctionCall;
     }
 
+    /**
+     * Registers an exception to be thrown.
+     *
+     * @param exception error to be shown.
+     */
     @Override
     public void handle(JSException exception) {
         super.handle(exception);
@@ -88,7 +115,12 @@ public class EncodeFunctionCallOperation extends BaseOperation {
         return result;
     }
 
-    // This utility is mainly used for encoding smart contract function calls
+    /**
+     * This utility is mainly used for encoding smart contract function calls
+     *
+     * @param objParam
+     *
+     */
     private static String objectAsFunctionParam(Object objParam) {
         String currStr = null;
 

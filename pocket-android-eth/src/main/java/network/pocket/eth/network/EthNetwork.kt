@@ -16,6 +16,9 @@ import org.web3j.crypto.ECKeyPair
 import org.web3j.crypto.Keys
 import java.math.BigInteger
 
+/**
+ * Eth Network operation executor.
+ */
 class EthNetwork {
 
     val netID: String
@@ -49,6 +52,15 @@ class EthNetwork {
         return result
     }
 
+    /**
+     * Creates a Wallet.
+     *
+     * @see Wallet
+     *
+     * @throws PocketError
+     *
+     * @return Created wallet.
+     */
     @Throws
     fun createWallet(): Wallet {
         val result: Wallet
@@ -83,6 +95,12 @@ class EthNetwork {
         }
     }
 
+    /**
+     * Sends an Eth relay and returns the response as a String.
+     *
+     * @param relay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithStringResult(relay: EthRelay, callback: StringCallback) {
         this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -108,6 +126,12 @@ class EthNetwork {
         }
     }
 
+    /**
+     * Sends an Eth relay and returns the response as a Boolean.
+     *
+     * @param relay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithBooleanResult(relay: EthRelay, callback: BooleanCallback) {
         this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -132,6 +156,12 @@ class EthNetwork {
         }
     }
 
+    /**
+     * Sends an Eth relay and returns the response as a BigInteger.
+     *
+     * @param relay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithBigIntegerResult(relay: EthRelay, callback: BigIntegerCallback) {
         this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -157,6 +187,12 @@ class EthNetwork {
         }
     }
 
+    /**
+     * Sends an Eth relay and returns the response as a JsonObject.
+     *
+     * @param relay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithJSONObjectResult(relay: EthRelay, callback: JSONObjectCallback) {
         this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -179,6 +215,12 @@ class EthNetwork {
         }
     }
 
+    /**
+     * Sends an Eth relay and returns the response as a JsonArray.
+     *
+     * @param relay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithJSONArrayResult(relay: EthRelay, callback: JSONArrayCallback) {
         this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -204,6 +246,12 @@ class EthNetwork {
         }
     }
 
+    /**
+     * Sends an Eth relay and returns the response as a JsonObjectOrBoolean.
+     *
+     * @param relay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithJSONObjectOrBooleanResult(relay: EthRelay, callback: JSONObjectOrBooleanCallback) {
         this.pocketEth.send(relay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null

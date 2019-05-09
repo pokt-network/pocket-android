@@ -4,6 +4,9 @@ import network.pocket.aion.util.HexStringUtil;
 
 import java.math.BigInteger;
 
+/**
+ * Block parameter that can be an integer block number, or the string
+ */
 public class BlockTag {
 
     private BigInteger blockHeight;

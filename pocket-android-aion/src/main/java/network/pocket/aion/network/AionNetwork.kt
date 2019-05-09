@@ -15,6 +15,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.math.BigInteger
 
+/**
+ * Aion Network operation executor.
+ */
 class AionNetwork {
 
     val netID: String
@@ -31,10 +34,24 @@ class AionNetwork {
         this.net = NetRpc(this)
     }
 
+    /**
+     * Gets current context.
+     *
+     * @return App context.
+     */
     fun getContext() : Context {
         return this.pocketAion.context
     }
 
+    /**
+     * Creates a Wallet.
+     *
+     * @see Wallet
+     *
+     * @throws PocketError
+     *
+     * @return Created wallet.
+     */
     fun createWallet() : Wallet {
         val result: Wallet
         val createWalletOperation = network.pocket.aion.operations.CreateWalletOperation(
@@ -51,6 +68,17 @@ class AionNetwork {
         return result
     }
 
+    /**
+     * Imports an Aion Wallet.
+     *
+     * @see Wallet
+     *
+     * @param privateKey used to decode the Wallet.
+     *
+     * @throws PocketError
+     *
+     * @return Created wallet.
+     */
     fun importWallet(privateKey: String) : Wallet {
         val result: Wallet
         val importWalletOperation = network.pocket.aion.operations.ImportWalletOperation(
@@ -82,6 +110,12 @@ class AionNetwork {
         }
     }
 
+    /**
+     * Sends an Aion relay and returns the response as a String.
+     *
+     * @param aionRelay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithStringResult(aionRelay: AionRelay, callback: StringCallback) {
         this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -107,6 +141,12 @@ class AionNetwork {
         }
     }
 
+    /**
+     * Sends an Aion relay and returns the response as a Boolean.
+     *
+     * @param aionRelay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithBooleanResult(aionRelay: AionRelay, callback: BooleanCallback) {
         this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -131,6 +171,12 @@ class AionNetwork {
         }
     }
 
+    /**
+     * Sends an Aion relay and returns the response as a BigInteger.
+     *
+     * @param aionRelay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithBigIntegerResult(aionRelay: AionRelay, callback: BigIntegerCallback) {
         this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -156,6 +202,12 @@ class AionNetwork {
         }
     }
 
+    /**
+     * Sends an Aion relay and returns the response as a JsonObject.
+     *
+     * @param aionRelay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithJSONObjectResult(aionRelay: AionRelay, callback: JSONObjectCallback) {
         this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -181,6 +233,12 @@ class AionNetwork {
         }
     }
 
+    /**
+     * Sends an Aion relay and returns the response as a JsonArray.
+     *
+     * @param aionRelay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithJSONArrayResult(aionRelay: AionRelay, callback: JSONArrayCallback) {
         this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null
@@ -206,6 +264,12 @@ class AionNetwork {
         }
     }
 
+    /**
+     * Sends an Aion relay and returns the response as a JsonObjectOrBoolean.
+     *
+     * @param aionRelay relay to be send.
+     * @param callback listener for the send relay operation.
+     */
     fun sendWithJSONObjectOrBooleanResult(aionRelay: AionRelay, callback: JSONObjectOrBooleanCallback) {
         this.pocketAion.send(aionRelay) { pocketError: PocketError?, jsonResponse: JSONObject? ->
             var error: PocketError? = null

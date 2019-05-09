@@ -2,6 +2,9 @@ package network.pocket.aion.rpc.types;
 
 import org.json.JSONObject;
 
+/**
+ * Object or Boolean Parameter
+ */
 public class ObjectOrBoolean {
 
     Boolean booleanValue;

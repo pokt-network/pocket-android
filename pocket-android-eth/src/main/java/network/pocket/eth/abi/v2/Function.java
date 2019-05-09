@@ -16,6 +16,9 @@ import org.web3j.abi.datatypes.*;
 import org.web3j.abi.datatypes.generated.AbiTypes;
 import org.web3j.utils.Numeric;
 
+/**
+ * Class used to Encode/Decode Eth operations.
+ */
 public class Function {
 
     private boolean constant;

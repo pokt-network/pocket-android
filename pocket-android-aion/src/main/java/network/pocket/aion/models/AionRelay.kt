@@ -5,6 +5,25 @@ import network.pocket.core.model.Relay
 import org.json.JSONArray
 import org.json.JSONObject
 
+/**
+ * Aion Relay RPC model class
+ *
+ * @see Relay
+ *
+ * @param netID the netId of the blockchain.
+ * @param devID the id used to interact with Pocket Api.
+ * @param method RPC method.
+ * @param params extra params.
+ *
+ * @property METHOD_KEY
+ * @property PARAMS_KEY
+ * @property JSONRPC_KEY
+ * @property JSONRPC_VERSION
+ * @property ID_KEY
+ *
+ * @constructor returns an Aion Relay
+ *
+ */
 class AionRelay(
     netID: String, devID: String, var method: String, var params: JSONArray?
 ) : Relay(PocketAion.NETWORK, netID, devID) {
