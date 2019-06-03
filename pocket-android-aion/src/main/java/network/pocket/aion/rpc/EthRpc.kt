@@ -206,10 +206,11 @@ class EthRpc
         val nonce = HexStringUtil.prependZeroX(nonce.toString(16))
         val nrg = HexStringUtil.prependZeroX(nrg.toString(16))
         val nrgPrice = HexStringUtil.prependZeroX(nrgPrice.toString(16))
+
         var strValue: String? = if (value != null) {
             HexStringUtil.prependZeroX(value.toString(16))
         } else {
-            null
+            ""
         }
 
         var txOperation = CreateTransactionOperation(this.aionNetwork.getContext(), wallet, nonce,
