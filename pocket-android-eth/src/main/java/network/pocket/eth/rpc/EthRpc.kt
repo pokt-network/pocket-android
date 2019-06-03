@@ -199,7 +199,7 @@ class EthRpc
         toAddress: String,
         gas: BigInteger,
         gasPrice: BigInteger,
-        value: BigInteger,
+        value: BigInteger?,
         data: String?,
         nonce: BigInteger,
         callback: StringCallback
@@ -212,7 +212,11 @@ class EthRpc
             null -> ""
             else -> data
         }
-        val rawTx = RawTransaction.createTransaction(nonce, gasPrice, gas, toAddress, value, dataValue)
+        val _value = when(value) {
+            null -> BigInteger("0")
+            else -> value
+        }
+        val rawTx = RawTransaction.createTransaction(nonce, gasPrice, gas, toAddress, _value, dataValue)
 
         val signedTxBytes = TransactionEncoder.signMessage(rawTx, Credentials.create(ECKeyPair.create(Numeric.hexStringToByteArray(wallet.privateKey))))
         var rawTransaction = Numeric.toHexString(signedTxBytes)
