@@ -120,7 +120,7 @@ public class EthContractTest {
 
                     try {
                         Wallet wallet = contract.getEthNetwork().importWallet(testAccountPK);
-                        contract.executeFunction("addToState", wallet, functionParams, null, new BigInteger("100000"), new BigInteger("10000000000"), new BigInteger("0"), new Function2<PocketError, String, Unit>() {
+                        contract.executeFunction("addToState", wallet, functionParams, null, new BigInteger("100000"), new BigInteger("10000000000"), null, new Function2<PocketError, String, Unit>() {
                             @Override
                             public Unit invoke(PocketError pocketError, String result) {
                                 assertNotNull(result);
