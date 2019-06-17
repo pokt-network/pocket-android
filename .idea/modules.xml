@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/pocket-android.iml" filepath="$PROJECT_DIR$/pocket-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pocket-android-aion/pocket-android-aion.iml" filepath="$PROJECT_DIR$/pocket-android-aion/pocket-android-aion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pocket-android-core/pocket-android-core.iml" filepath="$PROJECT_DIR$/pocket-android-core/pocket-android-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pocket-android-eth/pocket-android-eth.iml" filepath="$PROJECT_DIR$/pocket-android-eth/pocket-android-eth.iml" />
+    </modules>
+  </component>
+</project>
