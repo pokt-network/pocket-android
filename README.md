@@ -69,13 +69,13 @@ Now, you will need to add either of the 3 packages within PocketAndroid to your 
 
 ```
 // Eth
-implementation 'network.pocket:eth:0.0.1'
+implementation 'network.pocket:eth:0.0.2'
 
 // Aion
-implementation 'network.pocket:aion:0.0.1'
+implementation 'network.pocket:aion:0.0.2'
 
 // Core
-implementation 'network.pocket:core:0.0.1'
+implementation 'network.pocket:core:0.0.2'
 ```
 
 <h1 align="left">Usage</h1>
