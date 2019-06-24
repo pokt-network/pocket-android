@@ -160,7 +160,11 @@ constructor(
 
     // Private interface
     private fun parseContractFunctions() {
-        val lines = this.abiDefinition.lines()
+        val lines: MutableList<String> = this.abiDefinition.lines().toMutableList()
+        // drop first three lines
+        lines.removeAt(0)
+        lines.removeAt(0)
+        lines.removeAt(0)
         lines.forEach {
             val function = AVMFunction.functionParser(it)
             if (function != null) {
