@@ -3,12 +3,14 @@ package network.pocket.aion.abi.v2;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import network.pocket.aion.aionSource.ABIDecoder;
 import network.pocket.aion.aionSource.ABIStreamingEncoder;
 import network.pocket.aion.aionSource.Address;
 import network.pocket.aion.operations.EncodeFunctionCallOperation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static network.pocket.aion.util.HexStringUtil.bytesToHex;
@@ -55,13 +57,12 @@ public class AVMFunction {
 
     public static AVMFunction functionParser(String rawFunction) { //TODO error handling
         AVMFunction avmFunction = new AVMFunction();
+        avmFunction.params = new ArrayList<>();
         // split by `(` character
         String[] result = rawFunction.split("\\(");
         // split by space to get name modifier and return type
         String[] nonParams = result[0].split("\\s+");
-        // get the params by taking everything before the ')' and splitting it by commas
-        String[] params = result[1].split("\\)")[0].split(",");
-        // result2[0] is the function name
+        // handle non params
         int npLength = nonParams.length;
         avmFunction.modifier = nonParams[0].trim();
         if (npLength == 3) {
@@ -71,11 +72,14 @@ public class AVMFunction {
             avmFunction.returnType = nonParams[2];
             avmFunction.name = nonParams[3];
         }
-        // for each param, add to params list
-        for (String p : params) {
-            String[] temp = p.split("\\s+");
-            avmFunction.params.add(temp[0]);
+        // get the params by taking everything before the ')' and splitting it by commas
+        String[] t = result[1].split("\\)");
+        if (t.length == 0) {
+            return avmFunction;
         }
+        String[] params = t[0].split(",");
+        // for each param, add to params list
+        avmFunction.params.addAll(Arrays.asList(params));
         return avmFunction;
     }
 
@@ -94,7 +98,7 @@ public class AVMFunction {
     }
 
     private ABIStreamingEncoder encodeParam(ABIStreamingEncoder encoder, String type, Object o) {
-        switch (type) {
+        switch (type.trim()) {
             case ADDRESS:
                 encoder.encodeOneAddress((Address) o);
                 break;

@@ -118,14 +118,11 @@ public class AionContractTest {
 
                     try {
                         Wallet wallet = contract.getAionNetwork().importWallet(testAccountPK);
-                        contract.executeFunction("addToState", wallet, functionParams, null, new BigInteger("100000"), new BigInteger("10000000000"), null, new Function2<PocketError, String, Unit>() {
-                            @Override
-                            public Unit invoke(PocketError pocketError, String result) {
-                                assertNotNull(result);
-                                assertNull(pocketError);
-                                semaphore.release();
-                                return null;
-                            }
+                        contract.executeFunction("addToState", wallet, functionParams, null, new BigInteger("100000"), new BigInteger("10000000000"), null, (pocketError, result) -> {
+                            assertNotNull(result);
+                            assertNull(pocketError);
+                            semaphore.release();
+                            return null;
                         });
                     } catch (Exception e) {
                         e.printStackTrace();

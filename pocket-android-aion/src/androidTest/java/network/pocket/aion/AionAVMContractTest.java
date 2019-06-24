@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
@@ -36,15 +37,15 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class AionAVMContractTest {
 
-    final String avmTestContract = "0xa04ea987a8eb8e8e0d2f0386c16b932f2d66fed1313ab636e2b251a2947eff22";
-    String testAccountPK = "0x1593800fe636f6fe996a0148c4ee1ecd6ff55a47b351a40f2da9d68815e1c6c958a09d74260842d51592f7be77e02171e4aea295078de50e5695835eee743932";
-    AionAVMContract contract;
-    List<Object> functionParams;
+    private final String avmTestContract = "0xa04ea987a8eb8e8e0d2f0386c16b932f2d66fed1313ab636e2b251a2947eff22";
+    private String testAccountPK = "0x1593800fe636f6fe996a0148c4ee1ecd6ff55a47b351a40f2da9d68815e1c6c958a09d74260842d51592f7be77e02171e4aea295078de50e5695835eee743932";
+    private AionAVMContract contract;
+    private List<Object> functionParams;
 
     @Before
     public void init() {
         // Get the contract instance
-        InputStream is = this.getClass().getResourceAsStream("pocket_avm_test_abi");
+        InputStream is = InstrumentationRegistry.getContext().getResources().openRawResource(R.raw.pocket_avm_test_abi);
         Scanner s = new Scanner(is).useDelimiter("\\A");
         String result = s.hasNext() ? s.next() : "";
         contract = getContractInstance(result);
@@ -55,21 +56,18 @@ public class AionAVMContractTest {
 
     @Test
     public void testFunctionCall() {
-        SemaphoreUtil.executeSemaphoreCallback(new SemaphoreUtil.SemaphoreCallback() {
-            @Override
-            public void execute(final Semaphore semaphore) {
-                try {
-                    Wallet wallet = contract.getAionNetwork().importWallet(testAccountPK);
-                    contract.executeFunction("setString", wallet, functionParams, null, new BigInteger("100000"), new BigInteger("10000000000"), null, (pocketError, result1) -> {
+        SemaphoreUtil.executeSemaphoreCallback(semaphore -> {
+            try {
+                Wallet wallet = contract.getAionNetwork().importWallet(testAccountPK);
+                contract.executeFunction("setString", wallet, functionParams, null, new BigInteger("100000"), new BigInteger("10000000000"), null, (pocketError, result1) -> {
                         assertNotNull(result1);
                         assertNull(pocketError);
-                        semaphore.release();
-                        return null;
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
                     semaphore.release();
-                }
+                    return null;
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                semaphore.release();
             }
         });
     }
@@ -84,7 +82,7 @@ public class AionAVMContractTest {
         PocketAion pocketAion = new PocketAion(appContext, "DEVID1", netIds, 5, 60000, PocketAion.Networks.MASTERY.getNetID());
         assertNotNull(pocketAion);
 
-        return pocketAion.getMastery().createAVMSmartContractInstance(avmTestContract, abidefinition);
+        return Objects.requireNonNull(pocketAion.getMastery()).createAVMSmartContractInstance(avmTestContract, abidefinition);
     }
 
 }
