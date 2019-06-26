@@ -1,6 +1,9 @@
 package network.pocket.aion.network
 
 import android.content.Context
+import android.os.Build
+import android.support.annotation.RequiresApi
+import network.pocket.aion.AionAVMContract
 import network.pocket.aion.AionContract
 import network.pocket.aion.PocketAion
 import network.pocket.aion.models.AionRelay
@@ -98,6 +101,11 @@ class AionNetwork {
 
     fun createSmartContractInstance(contractAddress: String, abiDefinition: JSONArray) : AionContract {
         return AionContract(this, contractAddress, abiDefinition)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun createAVMSmartContractInstance(contractAddress: String, abiDefinition: String) : AionAVMContract {
+        return AionAVMContract(this, contractAddress, abiDefinition)
     }
 
     private fun parseErrorResponse(jsonResponse: JSONObject) : PocketError? {
