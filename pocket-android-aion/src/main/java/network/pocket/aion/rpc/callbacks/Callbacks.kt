@@ -18,4 +18,5 @@ typealias JSONObjectCallback = (pocketError: PocketError?, result: JSONObject?) 
 typealias JSONArrayCallback = (pocketError: PocketError?, result: JSONArray?) -> Unit
 typealias JSONObjectOrBooleanCallback = (pocketError: PocketError?, result: ObjectOrBoolean?) -> Unit
 typealias AnyArrayCallback = (pocketError: PocketError?, result: Array<Any>?) -> Unit
+typealias AnyCallback = (pocketError: PocketError?, result: Any?) -> Unit
 
