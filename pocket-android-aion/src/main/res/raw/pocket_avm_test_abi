@@ -1,0 +1,6 @@
+0.0
+aion.HelloAvm
+Clinit: (String, Address)
+public static String getString()
+public static void setString(String)
+public static Address getAdminAddress()
