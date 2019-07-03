@@ -33,3 +33,22 @@ open class Relay(blockchain: String, netId: String, devId: String, data: String)
         return Utils.areDirty(this.blockchain, this.data, this.devId)
     }
 }
+
+open class NewRelay(blockchain: String, netId: String, devId: String, data: String, method: String, path: String, headers: List<Pair<String,String>>){
+    var blockchain = blockchain
+    var netId = netId
+    var data = data
+    var devId = devId
+
+    /* Other params are optional */
+
+    /**
+     * Checks if this Relay has been configured correctly.
+     *
+     *
+     * @return whether it's correctly configured.
+     */
+    fun isValid(): Boolean {
+        return Utils.areDirty(this.blockchain, this.data, this.devId)
+    }
+}

@@ -3,10 +3,7 @@ package network.pocket.core.net
 import com.google.gson.Gson
 import network.pocket.core.BuildConfig
 import network.pocket.core.errors.PocketError
-import network.pocket.core.model.Configuration
-import network.pocket.core.model.Node
-import network.pocket.core.model.Relay
-import network.pocket.core.model.Report
+import network.pocket.core.model.*
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -64,7 +61,7 @@ internal class PocketAPI {
          * @param node specific node to be used.
          * @param relayCallback callback listener for the send relay operation.
          */
-        fun send(relay: Relay, node: Node, relayCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
+        fun send(relay: NewRelay, node: Node, relayCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
             val url = node.ipPort.plus(Constants.RELAY_PATH)
             val json = gson.toJson(relay)
             val request = Request.Builder()

@@ -52,7 +52,7 @@ abstract class Pocket {
      *
      */
     // Public interfaces
-    fun send(relay: Relay, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
+    fun send(relay: NewRelay, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
         if (!relay.isValid()) {
             callback.invoke(PocketError("Relay is missing a property, please verify all properties."), null)
             return
@@ -73,8 +73,8 @@ abstract class Pocket {
         }
     }
 
-    open fun send(blockchain: String, netID: String, data: String, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
-        send(Relay(blockchain, netID, this.dispatch.configuration.devId, data), callback)
+    open fun send(blockchain: String, netID: String, data: String, method: String, path: String, headers: List<Pair<String,String>>, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
+        send(NewRelay(blockchain, netID, this.dispatch.configuration.devId, data, method, path, headers), callback)
     }
 
     /**
