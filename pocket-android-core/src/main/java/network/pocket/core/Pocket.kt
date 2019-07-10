@@ -106,10 +106,10 @@ abstract class Pocket {
         return when(nodes) {
             null -> return null
             else -> {
-                if (nodes.isEmpty()) {
-                    null
-                } else {
-                    nodes[(0 until (nodes.count() - 1)).random()]
+                when(nodes.size) {
+                    0 -> null
+                    1 -> nodes.first()
+                    else -> nodes.random()
                 }
             }
         }
