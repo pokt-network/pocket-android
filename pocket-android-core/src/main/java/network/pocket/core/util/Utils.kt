@@ -16,13 +16,13 @@ class Utils {
          * @return true if values are valid
          */
         @Throws(Exception::class)
-        fun areDirty(vararg values: String): Boolean {
+        fun areDirty(vararg values: String?): Boolean {
             for (value in values) {
                 if (value.isNullOrEmpty()) {
-                    return false
+                    return true
                 }
             }
-            return true
+            return false
         }
     }
 }

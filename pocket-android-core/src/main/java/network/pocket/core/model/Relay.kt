@@ -8,20 +8,22 @@ import network.pocket.core.util.Utils
  * @property blockchain the blockchain network name, ie: ETH, AION.
  * @property netId the netId of the blockchain.
  * @property devId the id used to interact with Pocket Api.
- * @property ipPort Ip url for this Node.
+ * @property data the data to submit on this relay
+ * @property method the HTTP method to submit in this relay (POST, PUT, GET, DELETE, OPTIONS, HEAD)
+ * @property path the HTTP Path url to send this relay to
+ * @property headers the HTTP headers to submit on this relay
  *
  * @constructor Creates a Relay Object.
  */
-open class Relay(blockchain: String, netId: String, devId: String, data: String) {
+open class Relay(blockchain: String, netId: String, devId: String, data: String?, method: String?, path: String?, headers: List<Pair<String,String>>?) {
 
     var blockchain = blockchain
     var netId = netId
-    var data = data
     var devId = devId
-
-    constructor(blockchain: String, netId: String, devId: String) : this(blockchain, netId, devId, "") {
-        this.data = ""
-    }
+    var data = data
+    var method = method
+    var path = path
+    //var headers = headers
 
     /**
      * Checks if this Relay has been configured correctly.
@@ -30,25 +32,9 @@ open class Relay(blockchain: String, netId: String, devId: String, data: String)
      * @return whether it's correctly configured.
      */
     fun isValid(): Boolean {
-        return Utils.areDirty(this.blockchain, this.data, this.devId)
-    }
-}
-
-open class NewRelay(blockchain: String, netId: String, devId: String, data: String, method: String, path: String, headers: List<Pair<String,String>>){
-    var blockchain = blockchain
-    var netId = netId
-    var data = data
-    var devId = devId
-
-    /* Other params are optional */
-
-    /**
-     * Checks if this Relay has been configured correctly.
-     *
-     *
-     * @return whether it's correctly configured.
-     */
-    fun isValid(): Boolean {
-        return Utils.areDirty(this.blockchain, this.data, this.devId)
+        return when(Utils.areDirty(this.method, this.path)) {
+            true -> !Utils.areDirty(this.blockchain, this.netId, this.devId, this.data)
+            false -> !Utils.areDirty(this.blockchain, this.netId, this.devId, this.method, this.path)
+        }
     }
 }
