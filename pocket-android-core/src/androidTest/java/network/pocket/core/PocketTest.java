@@ -1,10 +1,7 @@
 package network.pocket.core;
 
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
-import android.util.Pair;
 import kotlin.Unit;
-import network.pocket.core.model.NewRelay;
 import network.pocket.core.model.Relay;
 import network.pocket.core.util.PocketTestPlugin;
 import network.pocket.core.util.SemaphoreUtil;
@@ -16,7 +13,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import static org.junit.Assert.*;
@@ -55,7 +51,7 @@ public class PocketTest {
             public void execute(Semaphore semaphore) {
                 String address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f";
                 String data = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"".concat(address).concat("\",\"latest\"],\"id\":67}");
-                NewRelay relay = new NewRelay("ETH", "4", "DEVO7QQqPHCK2h3cGXhh2rY", data, "", "", new ArrayList<>());
+                Relay relay = new Relay("ETH", "4", "DEVO7QQqPHCK2h3cGXhh2rY", data, "", "", new ArrayList<>());
                 plugin.send(relay, (pocketError, jsonObject) -> {
                     assertNotNull(pocketError);
                     assertNull(jsonObject);
@@ -75,7 +71,7 @@ public class PocketTest {
             public void execute(Semaphore semaphore) {
                 String address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f";
                 String data = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"".concat(address).concat("\",\"latest\"],\"id\":67}");
-                NewRelay relay = new NewRelay("ETH", "4", "DEVO7QQqPHCK2h3cGXhh2rY", data, "", "", new ArrayList<>());
+                Relay relay = new Relay("ETH", "4", "DEVO7QQqPHCK2h3cGXhh2rY", data, "", "", new ArrayList<>());
                 plugin.send(relay, (pocketError, jsonObject) -> {
                     assertNull(pocketError);
                     assertNotNull(jsonObject);
@@ -104,6 +100,22 @@ public class PocketTest {
                 });
             }
         });
+    }
 
+    @Test
+    public void testSendRESTRelay() {
+        PocketTestPlugin plugin = new PocketTestPlugin("DEVO7QQqPHCK2h3cGXhh2rY", "TEZOS", new String[]{"MAINNET"}, 5, 60000);
+
+        SemaphoreUtil.executeSemaphoreCallback(new SemaphoreUtil.SemaphoreCallback() {
+            @Override
+            public void execute(Semaphore semaphore) {
+                plugin.send("TEZOS", "MAINNET", "", "GET", "/network/version", null, (pocketError, jsonObject) -> {
+                    assertNull(pocketError);
+                    assertNotNull(jsonObject);
+                    semaphore.release();
+                    return Unit.INSTANCE;
+                });
+            }
+        });
     }
 }
