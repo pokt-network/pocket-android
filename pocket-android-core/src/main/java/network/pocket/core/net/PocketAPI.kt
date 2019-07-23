@@ -61,7 +61,7 @@ internal class PocketAPI {
          * @param node specific node to be used.
          * @param relayCallback callback listener for the send relay operation.
          */
-        fun send(relay: NewRelay, node: Node, relayCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
+        fun send(relay: Relay, node: Node, relayCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
             val url = node.ipPort.plus(Constants.RELAY_PATH)
             val json = gson.toJson(relay)
             val request = Request.Builder()
