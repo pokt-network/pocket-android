@@ -65,7 +65,7 @@ Now, you will need to add the core package within PocketAndroid to your module's
 
 ```
 // Core
-implementation 'network.pocket:core:0.0.1'
+implementation 'network.pocket:core:0.0.3'
 ```
 
 <h1 align="left">Usage</h1>
