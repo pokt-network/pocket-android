@@ -73,7 +73,7 @@ internal class PocketAPI {
             client.newCall(request).enqueue(object : PocketApiCallback(relayCallback) {
                 override fun onFailure(call: Call, error: IOException) {
                     super.onFailure(call, error)
-                    PocketAPI.send(Report(node.ip, error.message ?: "Request failed"), null)
+                    send(Report(node.ip, error.message ?: "Request failed"), null)
                 }
             })
         }
