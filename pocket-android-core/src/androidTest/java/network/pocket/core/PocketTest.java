@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 import static org.junit.Assert.*;
@@ -51,7 +50,7 @@ public class PocketTest {
             public void execute(Semaphore semaphore) {
                 String address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f";
                 String data = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"".concat(address).concat("\",\"latest\"],\"id\":67}");
-                Relay relay = new Relay("ETH", "4", "DEVO7QQqPHCK2h3cGXhh2rY", data, "", "", new ArrayList<>());
+                Relay relay = new Relay("ETH", "4", "DEVO7QQqPHCK2h3cGXhh2rY", data, null, "", null, null);
                 plugin.send(relay, (pocketError, jsonObject) -> {
                     assertNotNull(pocketError);
                     assertNull(jsonObject);
@@ -71,7 +70,7 @@ public class PocketTest {
             public void execute(Semaphore semaphore) {
                 String address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f";
                 String data = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"".concat(address).concat("\",\"latest\"],\"id\":67}");
-                Relay relay = new Relay("ETH", "4", "DEVO7QQqPHCK2h3cGXhh2rY", data, "", "", new ArrayList<>());
+                Relay relay = new Relay("ETH", "4", "DEVO7QQqPHCK2h3cGXhh2rY", data, null, null, null, null);
                 plugin.send(relay, (pocketError, jsonObject) -> {
                     assertNull(pocketError);
                     assertNotNull(jsonObject);
@@ -92,7 +91,7 @@ public class PocketTest {
             public void execute(Semaphore semaphore) {
                 String address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f";
                 String data = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"".concat(address).concat("\",\"latest\"],\"id\":67}");
-                plugin.send("ETH", "4", data, "", "", new ArrayList<>(), (pocketError, jsonObject) -> {
+                plugin.send("ETH", "4", data, null, null, null, null, (pocketError, jsonObject) -> {
                      assertNull(pocketError);
                     assertNotNull(jsonObject);
                     semaphore.release();
@@ -109,7 +108,7 @@ public class PocketTest {
         SemaphoreUtil.executeSemaphoreCallback(new SemaphoreUtil.SemaphoreCallback() {
             @Override
             public void execute(Semaphore semaphore) {
-                plugin.send("TEZOS", "MAINNET", "", "GET", "/network/version", null, (pocketError, jsonObject) -> {
+                plugin.send("TEZOS", "MAINNET", null, "GET", "/network/version", null, null, (pocketError, jsonObject) -> {
                     assertNull(pocketError);
                     assertNotNull(jsonObject);
                     semaphore.release();

@@ -15,7 +15,7 @@ import network.pocket.core.util.Utils
  *
  * @constructor Creates a Relay Object.
  */
-open class Relay(blockchain: String, netId: String, devId: String, data: String?, method: String?, path: String?, headers: List<Pair<String,String>>?) {
+open class Relay(blockchain: String, netId: String, devId: String, data: String?, method: String?, path: String?, queryParams: Map<String, String>?, headers: Map<String,String>?) {
 
     var blockchain = blockchain
     var netId = netId
@@ -23,7 +23,20 @@ open class Relay(blockchain: String, netId: String, devId: String, data: String?
     var data = data
     var method = method
     var path = path
-    //var headers = headers
+    var headers = headers
+    @Transient
+    var queryParams = queryParams
+
+    init {
+        this.queryParams?.let {queryMap ->
+            this.path = this.path + "?" + queryMap.map {queryMapEntry ->
+                "${queryMapEntry.key}=${queryMapEntry.value}"
+            }.joinToString {queryParamStr ->
+                "$queryParamStr&"
+            }
+        }
+
+    }
 
     /**
      * Checks if this Relay has been configured correctly.
@@ -32,9 +45,6 @@ open class Relay(blockchain: String, netId: String, devId: String, data: String?
      * @return whether it's correctly configured.
      */
     fun isValid(): Boolean {
-        return when(Utils.areDirty(this.method, this.path)) {
-            true -> !Utils.areDirty(this.blockchain, this.netId, this.devId, this.data)
-            false -> !Utils.areDirty(this.blockchain, this.netId, this.devId, this.method, this.path)
-        }
+        return !Utils.areDirty(this.blockchain, this.netId, this.devId)
     }
 }
