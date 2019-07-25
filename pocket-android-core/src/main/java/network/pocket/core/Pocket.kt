@@ -73,8 +73,8 @@ abstract class Pocket {
         }
     }
 
-    open fun send(blockchain: String, netID: String, data: String?, method: String?, path: String?, headers: List<Pair<String,String>>?, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
-        send(Relay(blockchain, netID, this.dispatch.configuration.devId, data, method, path, headers), callback)
+    open fun send(blockchain: String, netID: String, data: String?, method: String?, path: String?, queryParams: Map<String, String>?, headers: Map<String,String>?, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
+        send(Relay(blockchain, netID, this.dispatch.configuration.devId, data, method, path, queryParams, headers), callback)
     }
 
     /**
