@@ -91,9 +91,9 @@ public class PocketTest {
             public void execute(Semaphore semaphore) {
                 String address = "0xf892400Dc3C5a5eeBc96070ccd575D6A720F0F9f";
                 String data = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"".concat(address).concat("\",\"latest\"],\"id\":67}");
-                plugin.send("ETH", "4", data, null, null, null, null, (pocketError, jsonObject) -> {
+                plugin.send("ETH", "4", data, null, null, null, null, (pocketError, result) -> {
                      assertNull(pocketError);
-                    assertNotNull(jsonObject);
+                    assertNotNull(result);
                     semaphore.release();
                     return Unit.INSTANCE;
                 });
@@ -108,9 +108,9 @@ public class PocketTest {
         SemaphoreUtil.executeSemaphoreCallback(new SemaphoreUtil.SemaphoreCallback() {
             @Override
             public void execute(Semaphore semaphore) {
-                plugin.send("TEZOS", "MAINNET", null, "GET", "/network/version", null, null, (pocketError, jsonObject) -> {
+                plugin.send("TEZOS", "MAINNET", null, "GET", "/network/version", null, null, (pocketError, result) -> {
                     assertNull(pocketError);
-                    assertNotNull(jsonObject);
+                    assertNotNull(result);
                     semaphore.release();
                     return Unit.INSTANCE;
                 });

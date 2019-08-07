@@ -18,7 +18,7 @@ import java.lang.Exception
 internal class PocketAPI {
 
     companion object {
-        open class PocketApiCallback : Callback {
+        open class PocketApiJSONCallback : Callback {
 
             var responseCallback: (error: PocketError?, response: JSONObject?) -> Unit = { _: PocketError?, _: JSONObject? -> }
 
@@ -48,6 +48,35 @@ internal class PocketAPI {
             }
         }
 
+        open class PocketApiCallback : Callback {
+
+            private var responseCallback: (error: PocketError?, response: String?) -> Unit = { _: PocketError?, _: String? -> }
+
+            constructor(responseCallback: ((error: PocketError?, response: String?) -> Unit)?) {
+                this.responseCallback = responseCallback ?: this.responseCallback
+            }
+
+            override fun onFailure(call: Call, error: IOException) {
+                this.responseCallback.invoke(PocketError(error.message ?: "Request failed"), null)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.body()?.let {
+                        responseBody ->
+                    val responseBodyStr = responseBody.string()
+                    try {
+                        this.responseCallback.invoke(null, responseBodyStr)
+                    }catch (error: Exception){
+                        this.responseCallback.invoke(PocketError("Failed to parse the response to a valid Json \n $responseBodyStr \n ${error.printStackTrace()}"), null)
+                    }
+                    return@onResponse
+                }
+
+                this.responseCallback.invoke(PocketError("Invalid Response Body"), null)
+                return
+            }
+        }
+
         private var gson = Gson().newBuilder().create()
         private var client = OkHttpClient().newBuilder().followRedirects(false).followSslRedirects(false).build()
 
@@ -61,7 +90,7 @@ internal class PocketAPI {
          * @param node specific node to be used.
          * @param relayCallback callback listener for the send relay operation.
          */
-        fun send(relay: Relay, node: Node, relayCallback: ((error: PocketError?, response: JSONObject?) -> Unit)?) {
+        fun send(relay: Relay, node: Node, relayCallback: ((error: PocketError?, response: String?) -> Unit)?) {
             val url = node.ipPort.plus(Constants.RELAY_PATH)
             val json = gson.toJson(relay)
             val request = Request.Builder()
@@ -95,7 +124,7 @@ internal class PocketAPI {
                     RequestBody.create(MediaType.parse(Constants.JSON_CONTENT_TYPE), json)
                 ).build()
 
-            client.newCall(request).enqueue(PocketApiCallback(reportCallback))
+            client.newCall(request).enqueue(PocketApiJSONCallback(reportCallback))
         }
 
         /**
@@ -128,8 +157,7 @@ internal class PocketAPI {
                 override fun onResponse(call: Call, response: Response) {
                     response.body()?.let {
                         responseBody ->
-                        val jsonObj = JSONTokener(responseBody.string()).nextValue()
-                        when (jsonObj) {
+                        when (val jsonObj = JSONTokener(responseBody.string()).nextValue()) {
                             is JSONObject -> callback.invoke(PocketError("Invalid json format for $jsonObj"), null)
                             is JSONArray -> callback.invoke(null, jsonObj)
                             else -> {

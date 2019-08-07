@@ -4,7 +4,6 @@ import network.pocket.core.errors.PocketError
 import network.pocket.core.model.*
 import network.pocket.core.net.PocketAPI
 import org.json.JSONArray
-import org.json.JSONObject
 
 /**
  * Abstract Class used to interact with PocketApi.
@@ -24,7 +23,7 @@ import org.json.JSONObject
 abstract class Pocket {
 
     private val dispatch: Dispatch
-    val devID: String
+    private val devID: String
     private val netIds: Array<String>
     private val maxNodes: Int
     private val requestTimeOut: Int
@@ -52,7 +51,7 @@ abstract class Pocket {
      *
      */
     // Public interfaces
-    fun send(relay: Relay, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
+    fun send(relay: Relay, callback: (error: PocketError?, data: String?) -> Unit) {
         if (!relay.isValid()) {
             callback.invoke(PocketError("Relay is missing a property, please verify all properties."), null)
             return
@@ -73,7 +72,7 @@ abstract class Pocket {
         }
     }
 
-    open fun send(blockchain: String, netID: String, data: String?, method: String?, path: String?, queryParams: Map<String, String>?, headers: Map<String,String>?, callback: (error: PocketError?, data: JSONObject?) -> Unit) {
+    open fun send(blockchain: String, netID: String, data: String?, method: String?, path: String?, queryParams: Map<String, String>?, headers: Map<String,String>?, callback: (error: PocketError?, data: String?) -> Unit) {
         send(Relay(blockchain, netID, this.dispatch.configuration.devId, data, method, path, queryParams, headers), callback)
     }
 
