@@ -37,7 +37,7 @@
     </a>
 </div>
 
-PocketAndroid Core wraps all of the functionalities a developer will need to create their own plugin to start interacting with the Pocket Network:
+PocketAndroid Core wraps all of the functionality a developer will need to create their own plugin to start interacting with the Pocket Network:
 
 Before you can start using the library, you have to get a Developer ID by registering for MVP. [To learn how to register please click here.](https://pocket-network.readme.io/docs/how-to-participate#section-for-developers)
 
@@ -65,7 +65,7 @@ Now, you will need to add the core package within PocketAndroid to your module's
 
 ```
 // Core
-implementation 'network.pocket:core:0.0.3'
+implementation 'network.pocket:core:0.0.4'
 ```
 
 <h1 align="left">Usage</h1>
