@@ -75,7 +75,7 @@ implementation 'network.pocket:eth:0.0.2'
 implementation 'network.pocket:aion:0.0.3'
 
 // Core
-implementation 'network.pocket:core:0.0.3'
+implementation 'network.pocket:core:0.0.4'
 ```
 
 <h1 align="left">Usage</h1>
