@@ -36,6 +36,8 @@ android {
         outputDirectory = "$buildDir/javadoc"
         includeNonPublic = true
     }
+
+    resourcePrefix 'pocket_android_'
 }
 
 dependencies {
