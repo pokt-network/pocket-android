@@ -9,11 +9,16 @@
 
 # PocketAndroid
 Official Android client to use with the Pocket Network
+<div align="left">
+  <a  href="https://developer.android.com/docs">
+    <img src="https://img.shields.io/badge/android-reference-green.svg"/>
+  </a>
+</div>
 
 ## Overview
-<div align="left">
-    <a  href="https://github.com/pokt-network/pocket-android/releases"><img src="https://img.shields.io/github/release-pre/pokt-network/pocket-android.svg"/ </a>
-  <a href="https://circleci.com/gh/pokt-network/pocket-android/tree/master"><img src="https://circleci.com/gh/pokt-network/pocket-android/tree/master.svg?style=svg"/></a>
+  <div align="left">
+    <a  href="https://github.com/pokt-network/pocket-android/releases"><img src="https://img.shields.io/github/release-pre/pokt-network/pocket-android.svg"/></a>
+    <a href="https://circleci.com/gh/pokt-network/pocket-android/tree/master"><img src="https://circleci.com/gh/pokt-network/pocket-android/tree/master.svg?style=svg"/></a>
     <a  href="https://github.com/pokt-network/pocket-android/pulse"><img src="https://img.shields.io/github/contributors/pokt-network/pocket-android.svg"/></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg"/></a>
     <br >
