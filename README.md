@@ -1,8 +1,9 @@
 <div align="center">
   <a href="https://www.pokt.network">
-    <img src="https://pokt.network/wp-content/uploads/2018/12/Logo-488x228-px.png" alt="drawing" width="340"/>
+    <img src="https://user-images.githubusercontent.com/16605170/74199287-94f17680-4c18-11ea-9de2-b094fab91431.png" alt="Pocket Network logo" width="340"/>
   </a>
 </div>
+
 <h1 align="left">PocketAndroid</h1>
 <h6 align="left">Official Android client to use with the Pocket Network</h6>
 <div align="lef">
